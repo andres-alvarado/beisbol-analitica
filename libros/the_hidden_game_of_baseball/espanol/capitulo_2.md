@@ -1,4 +1,5 @@
-# Capítulo 2
+# Capítulo 2 - Qué esta mal con las Estadisticas Tradicionales del Béisbol
+
 Traducido por Andrés Alvarado( @juanitobanca en [Twitter](https://twitter.com/juanitobanca) y [Github](https://github.com/juanitobanca) )
 
 ## Promedio de Bateo (BA)

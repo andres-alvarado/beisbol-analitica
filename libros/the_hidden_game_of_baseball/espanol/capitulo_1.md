@@ -1,4 +1,5 @@
-# Capítulo 1
+# Capítulo 1 - La Música de la Esfera y la Ceniza
+
 Traducido por Andrés Alvarado( @juanitobanca en [Twitter](https://twitter.com/juanitobanca) y [Github](https://github.com/juanitobanca) )
 
 Un número por si solo únicamente sirve para responder a cuantos. Un número absoluto como 5714 o 715 (el récord de jonrones que alguna vez se consideró imbatible) carece de significado a menos de que se coloque en algún contexto que le dé vida.

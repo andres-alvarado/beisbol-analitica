@@ -1,4 +1,5 @@
-# Capítulo 4
+# Capítulo 4 - El Sistema de Ponderación Líneal
+
 Traducido por Miguel Corona ( @bretanic en [Twitter](https://twitter.com/bretanic) y [Github](https://github.com/bretanic) )
 
 ## La Ponderación Lineal

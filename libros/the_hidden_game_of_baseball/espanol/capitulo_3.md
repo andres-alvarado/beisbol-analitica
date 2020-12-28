@@ -1,4 +1,5 @@
-# Capítulo 3
+# Capítulo 3 - Las Nuevas Estadísticas
+
 Traducido por Andrés Alvarado( @juanitobanca en [Twitter](https://twitter.com/juanitobanca) y [Github](https://github.com/juanitobanca) )
 
 La Sabermetría es un enfoque que permite  lograr una mejor comprensión del juego.
