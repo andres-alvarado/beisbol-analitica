@@ -21,6 +21,7 @@ In order to calculate the expected run value of each possible strategy, Pete Pal
 Palmer also calculated the number of potential runs for each of the twenty four base out situations. Below table shows the run potential calculated by Palmer for the period 1961-1977.
 
 <center>
+
 |         |       |  Outs |      |
 |:-------:|:-----:|:-----:|:----:|
 | Runners |   0   |   1   |   2  |
@@ -32,6 +33,7 @@ Palmer also calculated the number of potential runs for each of the twenty four 
 |   1-3   | 1.639 | 1.088 | .494 |
 |   2-3   | 1.946 | 1.371 | .661 |
 |   123   | 2.254 | 1.546 | .798 |
+
 </center>
 
 At the beginning of a half inning, with nobody out and no runners on base, the run-scoring potential was .454. In rough terms, over the last decade or so teams have tended to score about 4.5 runs, which breaks down to about half a run per inning.  Why, then, is the figure in the table .454 and not .500? First, because a victorious home team does not bat in nine innings, but eight (except when the victory is gained in the ninth); second, because during most of the 1960s pitching dominated, so that the average team scored somewhat less than 4.5 runs.
