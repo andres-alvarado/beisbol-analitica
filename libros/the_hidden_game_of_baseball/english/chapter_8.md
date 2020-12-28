@@ -20,10 +20,10 @@ In order to calculate the expected run value of each possible strategy, Pete Pal
 
 Palmer also calculated the number of potential runs for each of the twenty four base out situations. Below table shows the run potential calculated by Palmer for the period 1961-1977.
 
+<center>
 |         |       |  Outs |      |
 |:-------:|:-----:|:-----:|:----:|
-|         |   0   |   1   |   2  |
-| Runners |       |       |      |
+| Runners |   0   |   1   |   2  |
 |   ---   |  .454 |  .249 | .095 |
 |   1--   |  .783 |  .478 | .209 |
 |   -2-   | 1.068 |  .699 | .348 |
@@ -32,6 +32,7 @@ Palmer also calculated the number of potential runs for each of the twenty four 
 |   1-3   | 1.639 | 1.088 | .494 |
 |   2-3   | 1.946 | 1.371 | .661 |
 |   123   | 2.254 | 1.546 | .798 |
+</center>
 
 At the beginning of a half inning, with nobody out and no runners on base, the run-scoring potential was .454. In rough terms, over the last decade or so teams have tended to score about 4.5 runs, which breaks down to about half a run per inning.  Why, then, is the figure in the table .454 and not .500? First, because a victorious home team does not bat in nine innings, but eight (except when the victory is gained in the ninth); second, because during most of the 1960s pitching dominated, so that the average team scored somewhat less than 4.5 runs.
 
@@ -39,11 +40,11 @@ If there is a man on third and one out, the team should score, on average .897 r
 
 That said: What is the break-even point for a strategy? Where do risk and reward intersect, and what is the “percentage play"? To find the break-even point, we must identify the point at which the run value that exists before that strategy employed equals the run value after the strategy has been employed. This may be he as as is expressed as an equation:
 
-$P_b x Vs +  (1 – P_b ) x V_f = V_p$
+`Pb x Vs +  (1 – Pb ) x Vf = Vp`
 
-$P_b$ is the probability of attaining the break-even point with a given strategy. $V_s$ is the value of a success, while $V_f$ is the value of a failure. Vp stands for the present value(i. e. before the strategy has been set in motion). Rearranging terms so as to set the break-even point off to one side, since this is what we are trying to find, we get:
+`Pb` is the probability of attaining the break-even point with a given strategy. `Vs` is the value of a success, while `Vf` is the value of a failure. Vp stands for the present value(i. e. before the strategy has been set in motion). Rearranging terms so as to set the break-even point off to one side, since this is what we are trying to find, we get:
 
-$P_b =  (V_p - V_f) /  (V_s - V_t)$
+`Pb =  (Vp - Vf) /  (Vs - Vt)`
 
 ## The Sacrifice
 
@@ -53,13 +54,13 @@ The potential run value is always lower after a successful sacrifice. With the i
 
 The stolen base, as indicated in the chapter on the Linear Weights System, is an overrated play, with even the best base stealers contributing a few extra runs or wins to their teams. The reason for this is that the break-even point is so high, roughly two steals in three attempts. The precise figure can be obtained from the Run Expectancy Table and the break-even point equation.  A runner on first with no outs is worth .478 A steal of second increases this to.699; a failure leaves no one on base and two out, worth .095.
 
-$Pb =  (.478 -.095) / (.699 -.095) = .634$
+`Pb =  (.478 -.095) / (.699 -.095) = .634`
 
 What about stealing other bases? Your team will suffer far more for your being thrown out than it will benefit from your gaining third, because it stands a pretty good chance of scoring already, simply by there being a man at second base,
 
 Stealing home without is a good play, a far better percentage play than stealing third: Because of the enormous potential gain as compared to the risk, you need a 35 percent probability of success in order to break even:
 
-$Pb =  (.382 -.000) / (1.095 –.000) = .349$
+`Pb =  (.382 -.000) / (1.095 –.000) = .349`
 
 ## The Intentional Base on Balls
 
