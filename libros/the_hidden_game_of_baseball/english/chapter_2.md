@@ -1,6 +1,5 @@
 # Chapter 2 - What's Wrong with Traditional Baseball Statistics
 
-
 Baseball, though simple in essence, was intricate in its detail and thus peculiarity suited to quantification.
 
 ## Batting Average

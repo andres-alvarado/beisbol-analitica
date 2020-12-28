@@ -1,6 +1,6 @@
-# Chapter 4 - Linear Weights assigns run values to the various offensive events.
+# Chapter 4 - The Linear Weights System
 
-It’s back to back basics, foundation is the same underlying the Rickey formula and most of the new statistics since: that wins and losses are what game is about; that wins and losses are proportional in some way to runs scored and runs allowed; and that runs in turn are proportional to the events which go into their making.
+Linear Weights assigns run values to the various offensive events. It’s back to back basics, foundation is the same underlying the Rickey formula and most of the new statistics since: that wins and losses are what game is about; that wins and losses are proportional in some way to runs scored and runs allowed; and that runs in turn are proportional to the events which go into their making.
 
 With Linear Weights, these events are expressed not in the familiar yet deceptive ratios( base hits to at bats, wins to decisions, etc ) but in runs themselves, the runs contributed( batting, stealing ) or saved ( pitching, fielding). Normalizing factors(to league average) built into the formulas for all but base stealing, where league average is not a shaping force, allow us to compute the number of runs provided last year in excess of those an average hitter might have produced in an equivalent number of plate appearances. And, by adjusting for home park influences, the Linear Weights comparison may be extended to how many runs accounted for beyond what an average player might have produced in the same number of at bats had he too played half his games in a specific stadium.
 
