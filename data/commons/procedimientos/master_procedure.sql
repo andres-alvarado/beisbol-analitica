@@ -31,6 +31,12 @@ CALL rem_event_run_value();
 -- Win Expectancy
 CALL we_win_expectancy();
 
+-- Aggregated Batting Stats
+CALL agg_batting_stats('majorLeagueId,seasonId,gameType2');
+CALL agg_batting_stats('majorLeagueId,seasonId,gameType2,teamId');
+CALL agg_batting_stats('majorLeagueId,seasonId,gameType2,teamId,playerId');
+CALL agg_batting_stats('majorLeagueId,seasonId,gameType2,venueId,teamType');
+
 -- Clean Staging Tables
 CALL clean_staging_tables();
 
