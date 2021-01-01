@@ -4,7 +4,7 @@ CREATE TABLE agg_batting_stats (
   grouping_id INTEGER UNSIGNED,
   grouping_description VARCHAR(255),
   majorLeagueId INTEGER,
-  seasonId INTEGER,
+  seasonId DOUBLE,
   gameType2 VARCHAR(10),
   teamType VARCHAR(10),
   venueId INTEGER,
