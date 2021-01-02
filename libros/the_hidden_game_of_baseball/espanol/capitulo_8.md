@@ -80,7 +80,7 @@ Debido a que el lanzador tiene permitido batear en la Liga Nacional, con frecuen
 En su porcentaje de béisbol de 1964, Earnshaw Cook se dió cuenta correctamente de que en el transcurso de una temporada, el primer bateador tenía más turnos al bate que los otros ocho; el segundo bateador tenía más de los siete hombres debajo de él; y así. Entonces, razonó, ¿por qué no dar a los mejores bateadores del equipo el número máximo de turnos al bate para que puedan lograr más hits y así producir más carreras?
 
 
-## El Sistema
+## La Computadora
 
 La computadora permite la grabación y el análisis jugada por jugada (de hecho tono por tono), lo que, entre otras cosas, nos permitiría mejorar las métricas avanzadas.
 
