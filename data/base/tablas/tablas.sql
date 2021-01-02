@@ -4,7 +4,6 @@ DROP TABLE players;
 DROP TABLE game_player_batting_stats;
 DROP TABLE game_player_fielding_stats;
 DROP TABLE game_player_pitching_stats;
-DROP TABLE game_batting_orders;
 DROP TABLE teams;
 DROP TABLE atbats;
 DROP TABLE pitches;
@@ -15,15 +14,6 @@ DROP TABLE actions;
 DROP TABLE pickoffs;
 DROP TABLE games;
 DROP TABLE batting_orders;
-
-CREATE TABLE batting_orders (
-  gamePk INTEGER,
-  teamId INTEGER,
-  playerId INTEGER,
-  battingOrder INTEGER
-) ENGINE = INNODB;
-
-ALTER TABLE batting_orders ADD INDEX(teamId);
 
 CREATE TABLE players (
   playerId INTEGER,
@@ -364,7 +354,10 @@ CREATE TABLE games (
   venueId INTEGER,
   homeTeamName VARCHAR(100),
   awayTeamName VARCHAR(100),
-  venueName VARCHAR(100)
+  venueName VARCHAR(100),
+  weather VARCHAR(100),
+  wind VARCHAR(100),
+  attendance INTEGER
 ) ENGINE = INNODB;
 
 ALTER TABLE games ADD PRIMARY KEY(gamePk);

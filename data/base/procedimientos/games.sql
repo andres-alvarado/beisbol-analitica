@@ -94,6 +94,13 @@ WHERE
   )
   AND gamePk IS NOT NULL;
 
+UPDATE games g
+INNER JOIN stg_box_game_info  gi
+ON g.gamePk   = gi.gamePk
+SET g.weather = gi.weather
+,   g.wind    = gi.wind
+,   g.attendance  = CAST(REPLACE(REPLACE(gi.attendance,',',''),'.','') AS UNSIGNED);
+
 COMMIT;
 
 END //

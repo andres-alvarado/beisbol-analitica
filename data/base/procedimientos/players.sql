@@ -34,7 +34,7 @@ SELECT DISTINCT
   abbreviation,
   batSideCode batSide,
   pitchHandCode pitchHand
-FROM stg_people
+FROM stg_players
 WHERE
   1 = 1
   AND id NOT IN (

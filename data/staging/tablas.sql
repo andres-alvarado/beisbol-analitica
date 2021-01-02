@@ -1,6 +1,7 @@
 USE baseball;
 
-DROP TABLE stg_people;
+DROP TABLE stg_box_game_info;
+DROP TABLE stg_players;
 DROP TABLE stg_box_team_batting;
 DROP TABLE stg_box_team_pitching;
 DROP TABLE stg_box_team_fielding;
@@ -19,7 +20,14 @@ DROP TABLE stg_play_pitch;
 DROP TABLE stg_play_pickoff;
 DROP TABLE stg_game_context;
 
-CREATE TABLE IF NOT EXISTS stg_people (
+CREATE TABLE IF NOT EXISTS stg_box_game_info(
+  gamePk INTEGER,
+  weather VARCHAR(100),
+  wind VARCHAR(100),
+  attendance VARCHAR(100)
+);
+
+CREATE TABLE IF NOT EXISTS stg_players (
   abbreviation VARCHAR(150),
   batSideCode VARCHAR(150),
   pitchHandCode VARCHAR(150),
