@@ -49,7 +49,7 @@ Dicho esto: ¿Cuál es el punto de equilibrio de una estrategia? ¿Dónde se cru
 
 `Pb = (Vp - Vf) / (Vs - Vt)`
 
-## El sacrificio
+## El Sacrificio
 
 El valor de ejecución potencial siempre es menor después de un sacrificio exitoso. Con la introducción de la bola viva, el toque de sacrificio debería haber desaparecido, excepto quizás en situaciones en las que se permite al lanzador llegar al plato en las últimas entradas con un hombre en primera. El toque de bola de cualquier otro hombre en el órden de bateo debería haberse convertido en un modo de estrategia tan poco frecuente como el “squeeze play”.
 
@@ -69,13 +69,13 @@ Hasta robar el “home plate” es una buena jugada, un porcentaje mucho mejor q
 
 `Pb = (.382 -.000) / (1.095 –.000) = .349`
 
-## La base intencional por bolas
+## La Base por Bola Intencional
 
 Y así como Palmer mostró que el toque de sacrificio nunca eleva el valor de carrera del equipo, también muestra que la base intencional por bolas nunca reduce el número esperado de carreras anotadas. Sin embargo, hay casos en los que un IBB (Intentional Base on Balls) reducirá el valor de carrera del equipo a la ofensiva.
 
 Debido a que el lanzador tiene permitido batear en la Liga Nacional, con frecuencia se emite una base intencional por bolas cuando hay dos “outs”, uno o dos hombres en juego, una base abierta y el bateador que beta de octavo en la alineación. Este es el uso clásico del IBB (no para preparar una jugada forzada, sino para trabajar con un bateador de menor habilidad). Este movimiento reduce ligeramente la probabilidad de que una carrera anote en esa mitad de la entrada, pero la reducción está más que compensada por la mayor probabilidad de que el equipo anote en su siguiente turno al bate). Esto se debe a que la siguiente entrada, en cambio de comenzar con el lanzador como bateador, se abre con el primer bate. Si el lanzador es retirado, la defensa puede haber salvado una carrera o dos, pero la ofensiva comienza la siguiente entrada en una situación más beneficiosa.
 
-## El orden de bateo
+## El Orden de Bateo
 
 En su porcentaje de béisbol de 1964, Earnshaw Cook se dió cuenta correctamente de que en el transcurso de una temporada, el primer bateador tenía más turnos al bate que los otros ocho; el segundo bateador tenía más de los siete hombres debajo de él; y así. Entonces, razonó, ¿por qué no dar a los mejores bateadores del equipo el número máximo de turnos al bate para que puedan lograr más hits y así producir más carreras?
 
