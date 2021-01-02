@@ -40,7 +40,7 @@ That said: What is the break-even point for a strategy? Where do risk and reward
 
 `Pb x Vs +  (1 – Pb ) x Vf = Vp`
 
-`Pb` is the probability of attaining the break-even point with a given strategy. `Vs` is the value of a success, while `Vf` is the value of a failure. Vp stands for the present value(i. e. before the strategy has been set in motion). Rearranging terms so as to set the break-even point off to one side, since this is what we are trying to find, we get:
+`Pb` is the probability of attaining the break-even point with a given strategy. `Vs` is the value of a success, while `Vf` is the value of a failure. `Vp` stands for the present value(i. e. before the strategy has been set in motion). Rearranging terms so as to set the break-even point off to one side, since this is what we are trying to find, we get:
 
 `Pb =  (Vp - Vf) /  (Vs - Vt)`
 
