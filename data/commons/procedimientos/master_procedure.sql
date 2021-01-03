@@ -11,6 +11,7 @@ BEGIN
 CALL batting_orders();
 CALL games();
 CALL players();
+CALL officials();
 CALL game_player_batting_stats();
 CALL game_player_fielding_stats();
 CALL game_player_pitching_stats();
@@ -22,6 +23,7 @@ CALL runners();
 CALL fielding_credits();
 CALL actions();
 CALL pickoffs();
+CALL game_officials();
 
 -- Run Expectancy
 CALL rem_play_by_play();

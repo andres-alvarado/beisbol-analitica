@@ -8,6 +8,7 @@ CREATE PROCEDURE clean_staging_tables()
 BEGIN
 
 TRUNCATE TABLE stg_players;
+TRUNCATE TABLE stg_officials;
 TRUNCATE TABLE stg_box_team_batting;
 TRUNCATE TABLE stg_box_team_pitching;
 TRUNCATE TABLE stg_box_team_fielding;
@@ -25,7 +26,9 @@ TRUNCATE TABLE stg_play_runner;
 TRUNCATE TABLE stg_play_pitch;
 TRUNCATE TABLE stg_play_pickoff;
 TRUNCATE TABLE stg_game_context;
-TRUNCATE TABLE stg_box_game_info;
+TRUNCATE TABLE stg_box_info;
+TRUNCATE TABLE stg_box_officials;
+
 
 END //
 

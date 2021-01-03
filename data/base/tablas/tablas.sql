@@ -15,6 +15,12 @@ DROP TABLE pickoffs;
 DROP TABLE games;
 DROP TABLE batting_orders;
 
+CREATE TABLE game_officials (
+  gamePk INTEGER,
+  officialId INTEGER,
+  position VARCHAR(100)
+) ENGINE = INNODB;
+
 CREATE TABLE players (
   playerId INTEGER,
   firstName VARCHAR(100),
@@ -31,6 +37,18 @@ CREATE TABLE players (
 ) ENGINE = INNODB;
 
 ALTER TABLE players ADD PRIMARY KEY(playerId);
+
+CREATE TABLE officials (
+  officialId INTEGER,
+  firstName VARCHAR(100),
+  lastName VARCHAR(100),
+  birthDate VARCHAR(100),
+  birthCity VARCHAR(100),
+  birthStateProvince VARCHAR(100),
+  birthCountry VARCHAR(100)
+) ENGINE = INNODB;
+
+ALTER TABLE officials ADD PRIMARY KEY(officialId);
 
 CREATE TABLE game_player_batting_stats (
   gamePk INTEGER,
