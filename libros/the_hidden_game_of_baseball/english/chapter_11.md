@@ -31,4 +31,5 @@ A catcher's main defensive contribution is in calling the ballgame and keeping h
 Catcher’s assists are uniquely a product of fear, since the steal is an elective play; no matter how good a shortstop you are, you’re not going to prevent the other team from hitting the ball to you. The catcher is the only fielder whom opponents can deny the chance to strut his stuff.
 
 ## Fielding Saves Runs
+
 The batting championship is not awarded to the batter who looks the best or who won it in the past, nor is the ERA title, but fielding is more deceptive: It’s hard to become convinced that one must trust the numbers rather than one’s eyes. Fielding may be a far less important part of the game than batting or pitching, but the superlative fielder can save as many runs beyond the average as a front-rank pitcher or, less frequently, a top hitter.
