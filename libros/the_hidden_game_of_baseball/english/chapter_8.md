@@ -8,7 +8,7 @@ Of course, when baseball people talk about The Book, they don't mean anything th
 
 Then, as now, percentage play consisted of nothing more than achieving the greatest possible gain in run scoring or run prevention while assuming the least possible risk. As the penalty for failure increases, so must the reward; otherwise the percentages are said to be working against you.
 
-The same maneuvers that Ned Hanlon, Connie Mack, and John McGraw used with so much success in the era of the dead ball have remained articles of faith for managers throughout the explosive hitting period between the wars and continue to be revered today. The old defense of outmoded practices,  “We've always done it that way**) bespeaks a conservative's preference to deal with the known rather than the unknown, until he is convinced of the former's utter, irredeemable inadequacy. The old code survives even when the circumstances which brought it into being vanished long ago.
+The same maneuvers that Ned Hanlon, Connie Mack, and John McGraw used with so much success in the era of the dead ball have remained articles of faith for managers throughout the explosive hitting period between the wars and continue to be revered today. The old defense of outmoded practices,  ***We've always done it that way***) bespeaks a conservative's preference to deal with the known rather than the unknown, until he is convinced of the former's utter, irredeemable inadequacy. The old code survives even when the circumstances which brought it into being vanished long ago.
 
 But what happened to this idea, born of a particular time and particular conditions, was that it became entrenched and grew, spreading itself into other times and other conditions which would not have been fertile for its invention.
 
