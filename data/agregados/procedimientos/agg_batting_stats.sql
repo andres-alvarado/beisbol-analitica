@@ -108,7 +108,7 @@ SET @insert_stmt = CONCAT('INSERT INTO agg_batting_stats (', p_grouping_fields,'
                                 caughtStealing + stolenBases stolenBaseAttempts,
                                 IF(
                                 caughtStealing + stolenBases > 0,
-                                caughtStealing / (caughtStealing + stolenBases),
+                                stolenBases / (caughtStealing + stolenBases),
                                 NULL
                                 ) stolenBasePercentage,
                                 IF(homeRuns > 0, atBats / homeRuns, NULL) atBatsPerHomeRunsPercentage,
@@ -146,7 +146,7 @@ SET @insert_stmt = CONCAT('INSERT INTO agg_batting_stats (', p_grouping_fields,'
                                 ) runScoredPercentage,
                                 IF(
                                 atBats - strikeOuts - homeRuns - sacFlies > 0,
-                                (singles + doubles + triples) / (atBats - strikeOuts - homeRuns - sacFlies),
+                                (singles + doubles + triples) / (atBats - strikeOuts - homeRuns + sacFlies),
                                 NULL
                                 ) battedBallsInPlayPercentage
                             FROM stats
