@@ -11,6 +11,8 @@ CREATE TABLE IF NOT EXISTS rem_play_by_play (
   halfInning VARCHAR(15),
   atBatIndex INTEGER,
   playIndex INTEGER,
+  strikesBeforePlay INTEGER,
+  ballsBeforePlay INTEGER,
   event VARCHAR(100),
   runnersBeforePlay VARCHAR(3),
   runsScoredBeforePlay INTEGER,

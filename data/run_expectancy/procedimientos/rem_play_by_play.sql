@@ -308,40 +308,81 @@ SET pbp.scheduledInnings = g.scheduledInnings
 ,   pbp.battingTeamScoreEndGame  = IF( pbp.battingTeamId = homeTeamId, homeScore, awayScore )
 ,   pbp.pitchingTeamScoreEndGame = IF( pbp.pitchingTeamId = homeTeamId, homeScore, awayScore );
 
-/* Actualizar score en cada momento del juegp( battingTeamScoreStartInning, pitchingTeamScoreStartInning )*/
+/* Actualizar score en cada momento del juego( battingTeamScoreStartInning, pitchingTeamScoreStartInning )*/
 UPDATE
   rem_play_by_play pbp
 INNER JOIN (
-With runs_scored_per_inning As
-(
-Select Distinct gamePk, inning, atBatIndex, playIndex, runsScoredInPlay, battingTeamId, pitchingTeamId
-From rem_play_by_play
-)
-Select n.gamePk, n.atBatIndex, n.playIndex, runsScoredInPlay, (
-Select Sum(runsScoredInPlay )
-From runs_scored_per_inning b
-Where  n.gamePk = b.gamePk
-And n.battingTeamId = b.battingTeamId
-And ( n.atBatIndex > b.atBatIndex
-Or  ( n.atBatIndex = b.atBatIndex
-    And n.playIndex  > b.playIndex
+    WITH runs_scored_per_inning AS (
+      SELECT DISTINCT
+        gamePk,
+        inning,
+        atBatIndex,
+        playIndex,
+        runsScoredInPlay,
+        battingTeamId,
+        pitchingTeamId
+      FROM rem_play_by_play
     )
-) ) battingTeamScore,
-(
-Select Sum(runsScoredInPlay )
-From runs_scored_per_inning p
-Where  n.gamePk = p.gamePk
-And n.pitchingTeamId = p.battingTeamId
-And n.atBatIndex > p.atBatIndex
-) pitchingTeamScore
-From rem_play_by_play n
+    SELECT
+      n.gamePk,
+      n.atBatIndex,
+      n.playIndex,
+      runsScoredInPlay,
+      (
+      SELECT
+        SUM(runsScoredInPlay)
+      FROM runs_scored_per_inning b
+      WHERE
+        n.gamePk = b.gamePk
+        AND n.battingTeamId = b.battingTeamId
+        AND (
+          n.atBatIndex > b.atBatIndex
+          OR (
+            n.atBatIndex = b.atBatIndex
+            AND n.playIndex > b.playIndex
+          )
+        )
+    ) battingTeamScore,
+      (
+      SELECT
+        SUM(runsScoredInPlay)
+      FROM runs_scored_per_inning p
+      WHERE
+        n.gamePk = p.gamePk
+        AND n.pitchingTeamId = p.battingTeamId
+        AND n.atBatIndex > p.atBatIndex
+    ) pitchingTeamScore
+    FROM rem_play_by_play n
+  ) rsi
+  ON pbp.gamePk = rsi.gamePk
+  AND pbp.atBatIndex = rsi.atBatIndex
+  AND pbp.playIndex = rsi.playIndex
+  SET pbp.battingTeamScore = Coalesce( rsi.battingTeamScore,0)
+  ,   pbp.pitchingTeamScore = Coalesce( rsi.pitchingTeamScore,0);
 
-) rsi
-ON pbp.gamePk = rsi.gamePk
-AND pbp.atBatIndex = rsi.atBatIndex
-AND pbp.playIndex = rsi.playIndex
-SET pbp.battingTeamScore = Coalesce( rsi.battingTeamScore,0)
-,   pbp.pitchingTeamScore = Coalesce( rsi.pitchingTeamScore,0);
+/* Actualizar los strikes y bolas antes de la jugada */
+UPDATE
+  rem_play_by_play pbp
+LEFT JOIN (
+  SELECT
+    pbp.gamePk,
+    pbp.atBatIndex,
+    pbp.playIndex,
+    MAX(startStrikes) strikesBeforePlay,
+    MAX(startBalls) ballsBeforePlay
+  FROM rem_play_by_play pbp
+  INNER JOIN pitches p
+    ON pbp.gamePk = p.gamePk
+    AND pbp.atBatIndex = p.atBatIndex
+    AND pbp.playIndex >= pbp.playIndex
+  GROUP BY
+    1, 2, 3
+) bs
+  ON pbp.gamePk = bs.gamePk
+  AND pbp.atBatIndex = bs.atBatIndex
+  AND pbp.playIndex = bs.playIndex
+  SET pbp.strikesBeforePlay = Coalesce(bs.strikesBeforePlay,0)
+  ,   pbp.ballsBeforePlay = Coalesce(bs.ballsBeforePlay,0);
 
 COMMIT;
 
