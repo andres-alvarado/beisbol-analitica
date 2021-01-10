@@ -1,6 +1,6 @@
 
 # Chapter 8 - El libro ... y la Computadora
-Traducido por Carlos Muñoz( @carlos96martinez en [Twitter](https://twitter.com/carlos96martinez) y [Github](https://github.com/carlos96martinez) )
+Traducido por Carlos Muñoz( @carlos96munoz en [Twitter](https://twitter.com/carlos96munoz) y [Github](https://github.com/carlos96munoz) )
 
 
 El béisbol, como el póquer, es un juego en el que las situaciones varían dentro de un rango definido y, por lo tanto, pueden modelarse matemáticamente; dentro de tal modelo, se calcula la probabilidad de que una táctica en particular tenga éxito. Esto está atestiguado por la tendencia tradicional de los gerentes de "jugar los porcentajes" no solo porque en el largo plazo el porcentaje de béisbol es ganar juegos, ganar béisbol, sino también porque los pilotos, al recurrir a una autoridad superior en forma de "El Librito", desvían mucho de cuestionar lo que va en contra de la longevidad de la carrera. Pero, ¿cómo pueden pretender jugar los porcentajes si no saben cuáles son?
