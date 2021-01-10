@@ -305,8 +305,9 @@ UPDATE
 INNER JOIN games g
 ON pbp.gamePk = g.gamePk
 SET pbp.scheduledInnings = g.scheduledInnings
-,   pbp.battingTeamScoreEndGame  = IF( pbp.battingTeamId = homeTeamId, homeScore, awayScore )
-,   pbp.pitchingTeamScoreEndGame = IF( pbp.pitchingTeamId = homeTeamId, homeScore, awayScore );
+,   pbp.battingTeamScoreEndGame  = IF( pbp.battingTeamId = g.homeTeamId, g.homeScore, g.awayScore )
+,   pbp.pitchingTeamScoreEndGame = IF( pbp.pitchingTeamId = g.homeTeamId, g.homeScore, g.awayScore )
+,   pbp.gameType2                = g.gameType2;
 
 /* Actualizar score en cada momento del juego( battingTeamScoreStartInning, pitchingTeamScoreStartInning )*/
 UPDATE

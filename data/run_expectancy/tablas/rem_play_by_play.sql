@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS rem_play_by_play (
   majorLeagueId INTEGER,
   seasonId DOUBLE,
   venueId INTEGER,
+  gameType2 VARCHAR(10),
   gamePk INTEGER,
   inning INTEGER,
   halfInning VARCHAR(15),
