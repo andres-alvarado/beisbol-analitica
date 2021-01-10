@@ -1,5 +1,5 @@
 # Capítulo 11 - Midiendo lo Inmedible
-Traducido por Carlos Muñoz( @carlos96martinez en [Twitter](https://twitter.com/carlos96martinez) y [Github](https://github.com/carlos96martinez) )
+Traducido por Carlos Muñoz( @carlos96munoz en [Twitter](https://twitter.com/carlos96munoz) y [Github](https://github.com/carlos96munoz) )
 
 ## Porcentaje de Fildeo
 
