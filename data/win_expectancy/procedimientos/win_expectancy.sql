@@ -4,82 +4,42 @@ DROP PROCEDURE we_win_expectancy;
 
 DELIMITER //
 
-CREATE PROCEDURE we_win_expectancy()
+CREATE PROCEDURE we_win_expectancy(IN p_grouping_fields VARCHAR(255), IN p_perspective VARCHAR(30), IN p_score_difference INTEGER )
 BEGIN
 
-INSERT INTO we_win_expectancy(
-    majorLeagueId,
-    seasonId,
-    runnersBeforePlay,
-    outsBeforePlay,
-    battingTeamScore,
-    win_expectancy
-  )
-  WITH pbp AS (
-    SELECT
-      majorLeagueId,
-      seasonId,
-      runnersBeforePlay,
-      outsBeforePlay,
-      CASE
-        WHEN battingteamscore - pitchingteamscore <= -5 THEN -5
-        WHEN battingteamscore - pitchingteamscore >= 5 THEN 5
-        ELSE battingteamscore - pitchingteamscore
-      END battingTeamScore,
-      IF(battingteamscoreendgame > pitchingteamscoreendgame, 'W', 'L') result,
-      COUNT(1) n
-    FROM rem_play_by_play
-    WHERE
-      (
-        scheduledInnings > inning
-        OR (
-          scheduledInnings = inning
-          AND halfInning = 'top'
-        )
-      )
-    GROUP BY
-      1, 2, 3, 4, 5, 6
-  ),
-  w AS (
-    SELECT
-      majorLeagueId,
-      seasonId,
-      runnersBeforePlay,
-      outsBeforePlay,
-      battingTeamScore,
-      result,
-      n w
-    FROM pbp
-    WHERE
-      result = 'W'
-  ),
-  l AS (
-    SELECT
-      majorLeagueId,
-      seasonId,
-      runnersBeforePlay,
-      outsBeforePlay,
-      battingTeamScore,
-      result,
-      n l
-    FROM pbp
-    WHERE
-      result = 'L'
-  )
-SELECT
-  w.majorLeagueId,
-  w.seasonId,
-  w.runnersBeforePlay,
-  w.outsBeforePlay,
-  w.battingTeamScore,
-  IF(w.battingTeamScore = 0, 0.50, w / (l + w)) win_expectancy
-FROM w
-INNER JOIN l
-  ON w.majorLeagueId = l.majorLeagueId
-  AND w.seasonId = l.seasonId
-  AND w.runnersBeforePlay = l.runnersBeforePlay
-  AND w.outsBeforePlay = l.outsBeforePlay
-  AND w.battingTeamScore = l.battingTeamScore;
+/* Para probar este procedimiento  hacer: CALL we_win_expectancy( 'majorLeagueId', 'BATTING', 5, @insert_stmt); */
+
+SET @insert_stmt = CONCAT('INSERT INTO we_win_expectancy (',  p_grouping_fields,','
+                          ' perspective,
+                            score_difference,
+                            games,
+                            wins,
+                            losses,
+                            win_expectancy,
+                            grouping_id,
+                            grouping_description
+                            )
+                            WITH pbp AS (
+                             SELECT DISTINCT gamePk, ',
+                             p_grouping_fields, ',',
+                             we_generate_score_clause( p_perspective, p_score_difference ),
+                           ' FROM rem_play_by_play
+                             WHERE gameType2 IN ("PS","RS")
+                             AND battingTeamScoreEndGame != pitchingTeamScoreEndGame
+                           ) SELECT ', p_grouping_fields,',"', p_perspective, '" perspective,',
+                          '     score_difference,
+                                COUNT( 1 ) AS games,
+                                SUM( wins ) AS wins,
+                                SUM( losses ) AS losses,
+                                SUM( wins ) / SUM( wins + losses ) win_expectancy,
+                                agg_grouping_id("', p_grouping_fields, '") grouping_id,
+                                agg_grouping_description("', p_grouping_fields, '") grouping_description
+                             FROM pbp
+                             GROUP BY ', p_grouping_fields, ', perspective, score_difference'
+                           );
+
+PREPARE insert_stmt_sql FROM @insert_stmt;
+EXECUTE insert_stmt_sql;
 
 END //
 
