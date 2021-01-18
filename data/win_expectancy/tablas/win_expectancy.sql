@@ -3,10 +3,12 @@ USE baseball;
 DROP TABLE we_win_expectancy;
 
 CREATE TABLE IF NOT EXISTS we_win_expectancy (
-  grouping_id INTEGER UNSIGNED,
-  grouping_description VARCHAR(255),
+  groupingId INTEGER UNSIGNED,
+  groupingDescription VARCHAR(255),
   majorLeagueId INTEGER,
   seasonId DOUBLE,
+  startSeason INTEGER,
+  endSeason INTEGER,
   gameType2 VARCHAR(10),
   venueId INTEGER,
   battingTeamId INTEGER,
@@ -15,11 +17,11 @@ CREATE TABLE IF NOT EXISTS we_win_expectancy (
   runnersBeforePlay VARCHAR(3),
   outsBeforePlay INTEGER,
   perspective VARCHAR(20),
-  score_difference INTEGER,
+  scoreDifference INTEGER,
   games INTEGER,
   wins INTEGER,
   losses INTEGER,
-  win_expectancy DOUBLE
+  winExpectancy DOUBLE
 );
 
 ALTER TABLE we_win_expectancy ADD INDEX( grouping_id );

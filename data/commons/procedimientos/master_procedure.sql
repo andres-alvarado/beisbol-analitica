@@ -31,16 +31,16 @@ CALL rem_run_expectancy_matrix();
 CALL rem_event_run_value();
 
 -- Win Expectancy
-CALL we_win_expectancy( 'majorLeagueId,seasonId,gameType2', 'BATTING', 5);
-CALL we_win_expectancy( 'majorLeagueId,seasonId,inning,gameType2', 'BATTING', 5);
-CALL we_win_expectancy( 'majorLeagueId,seasonId,inning,gameType2,runnersBeforePlay,outsBeforePlay', 'BATTING', 5);
+CALL we_win_expectancy( 'majorLeagueId,seasonId,gameType2', 'BATTING', 5, 3, 3, @insert_stmt );
+CALL we_win_expectancy( 'majorLeagueId,seasonId,inning,gameType2', 'BATTING', 5, 3, 3, @insert_stmt);
+CALL we_win_expectancy( 'majorLeagueId,seasonId,inning,gameType2,runnersBeforePlay,outsBeforePlay', 'BATTING', 5, 3, 3, @insert_stmt);
 
 -- Aggregated Batting Stats
-CALL agg_batting_stats('majorLeagueId,seasonId,gameType2');
-CALL agg_batting_stats('majorLeagueId,seasonId,gameType2,teamId');
-CALL agg_batting_stats('majorLeagueId,seasonId,gameType2,teamId,playerId');
-CALL agg_batting_stats('majorLeagueId,seasonId,gameType2,venueId,teamId,teamType');
-CALL agg_batting_stats('majorLeagueId,seasonId,gameType2,teamId,teamType');
+CALL agg_batting_stats( 'majorLeagueId,seasonId,gameType2', @insert_stmt );
+CALL agg_batting_stats( 'majorLeagueId,seasonId,gameType2,teamId', @insert_stmt );
+CALL agg_batting_stats( 'majorLeagueId,seasonId,gameType2,teamId,playerId', @insert_stmt );
+CALL agg_batting_stats( 'majorLeagueId,seasonId,gameType2,venueId,teamId,teamType', @insert_stmt );
+CALL agg_batting_stats( 'majorLeagueId,seasonId,gameType2,teamId,teamType', @insert_stmt );
 
 -- Clean Staging Tables
 CALL clean_staging_tables();
