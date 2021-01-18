@@ -19,7 +19,7 @@ BEGIN
                             ' WHEN battingTeamScore - pitchingTeamScore <= ', -p_score_difference, ' THEN ', -p_score_difference,
                             ' WHEN battingTeamScore - pitchingTeamScore >  ',  p_score_difference, ' THEN ',  p_score_difference,
                             ' ELSE battingTeamScore - pitchingTeamScore',
-                            ' END score_difference, ',
+                            ' END scoreDifference, ',
                             ' battingTeamScoreEndGame > pitchingTeamScoreEndGame wins, ',
                             ' battingTeamScoreEndGame < pitchingTeamScoreEndGame losses '
                         );
@@ -28,7 +28,7 @@ BEGIN
                             ' WHEN pitchingTeamScore - battingTeamScore <= ', -p_score_difference, ' THEN ', -p_score_difference,
                             ' WHEN pitchingTeamScore - battingTeamScore >  ',  p_score_difference, ' THEN ',  p_score_difference,
                             ' ELSE pitchingTeamScore - battingTeamScore',
-                            ' END score_difference, ',
+                            ' END scoreDifference, ',
                             ' pitchingTeamScoreEndGame > battingTeamScoreEndGame wins, ',
                             ' pitchingTeamScoreEndGame < battingTeamScoreEndGame losses '
                             );
