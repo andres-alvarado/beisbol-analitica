@@ -28,6 +28,8 @@ CREATE TABLE IF NOT EXISTS rem_play_by_play (
   pitchingTeamId INTEGER,
   batterId INTEGER,
   pitcherId INTEGER,
+  responsiblePitcherId INTEGER,
+  runnerId INTEGER,
   scheduledInnings INTEGER,
   battingTeamScore INTEGER,
   pitchingTeamScore INTEGER,

@@ -58,7 +58,7 @@ BEGIN
                                   COUNT( 1 ) AS games,
                                   SUM( wins ) AS wins,
                                   SUM( losses ) AS losses,
-                                  SUM( wins ) / SUM( wins + losses ) winExpectancy,
+                                  SUM( wins ) / COUNT( 1 ) winExpectancy,
                                   agg_grouping_id("', p_grouping_fields, '") groupingId,
                                   agg_grouping_description("', p_grouping_fields, '") groupingDescription
                               FROM d
