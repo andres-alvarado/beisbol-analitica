@@ -24,4 +24,4 @@ CREATE TABLE IF NOT EXISTS we_win_expectancy (
   winExpectancy DOUBLE
 );
 
-ALTER TABLE we_win_expectancy ADD INDEX( grouping_id );
+ALTER TABLE we_win_expectancy ADD INDEX( groupingId );
