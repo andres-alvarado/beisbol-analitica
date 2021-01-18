@@ -4,7 +4,7 @@ DROP PROCEDURE agg_batting_stats;
 
 DELIMITER //
 
-CREATE PROCEDURE agg_batting_stats( IN p_grouping_fields VARCHAR(255))
+CREATE PROCEDURE agg_batting_stats( IN p_grouping_fields VARCHAR(255), OUT insert_stmt VARCHAR(16000))
 BEGIN
 
 /* Para probar este procedimiento hacer: CALL agg_batting_stats( 'majorLeagueId', @insert_stmt);  */
@@ -202,6 +202,7 @@ SET @insert_stmt = CONCAT('INSERT INTO agg_batting_stats (', p_grouping_fields,'
                             FROM advanced_stats a
                             ');
 
+SELECT @insert_stmt;
 PREPARE insert_stmt_sql FROM @insert_stmt;
 EXECUTE insert_stmt_sql;
 
