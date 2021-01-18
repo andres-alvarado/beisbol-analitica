@@ -39,7 +39,8 @@ CALL we_win_expectancy( 'majorLeagueId,seasonId,inning,gameType2,runnersBeforePl
 CALL agg_batting_stats('majorLeagueId,seasonId,gameType2');
 CALL agg_batting_stats('majorLeagueId,seasonId,gameType2,teamId');
 CALL agg_batting_stats('majorLeagueId,seasonId,gameType2,teamId,playerId');
-CALL agg_batting_stats('majorLeagueId,seasonId,gameType2,venueId,teamType');
+CALL agg_batting_stats('majorLeagueId,seasonId,gameType2,venueId,teamId,teamType');
+CALL agg_batting_stats('majorLeagueId,seasonId,gameType2,teamId,teamType');
 
 -- Clean Staging Tables
 CALL clean_staging_tables();
