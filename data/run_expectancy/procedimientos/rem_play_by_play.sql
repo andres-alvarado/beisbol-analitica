@@ -55,7 +55,6 @@ game_runners AS (
         gamePk
       FROM rem_play_by_play
     )
-    AND g.gameType2 = 'RS'
 ),
 /* Obtener movimiento de jugadores a lo largo del inning y hasta cierto punto( atBatIndex,playIndex) */
 runner_movements AS (
@@ -384,6 +383,43 @@ LEFT JOIN (
   AND pbp.playIndex = bs.playIndex
   SET pbp.strikesBeforePlay = Coalesce(bs.strikesBeforePlay,0)
   ,   pbp.ballsBeforePlay = Coalesce(bs.ballsBeforePlay,0);
+
+/* Actualizar corredor a cargo de la jugada y pitcher responsable de corredor. */
+UPDATE
+  rem_play_by_play pbp
+INNER JOIN (
+  SELECT
+    gamePk,
+    atBatIndex,
+    playIndex,
+    runnerId,
+    event,
+    responsiblePitcherId
+  FROM runners
+  WHERE
+    eventType IN
+    (
+      'caught_stealing_2b',
+      'caught_stealing_3b',
+      'caught_stealing_home',
+      'pickoff_1b',
+      'pickoff_2b',
+      'pickoff_3b',
+      'pickoff_caught_stealing_2b',
+      'pickoff_caught_stealing_3b',
+      'pickoff_caught_stealing_home',
+      'stolen_base_2b',
+      'stolen_base_3b',
+      'stolen_base_home'
+    )
+  ) r
+ON pbp.gamePk = r.gamePk
+AND pbp.atBatIndex = r.atBatIndex
+AND pbp.playIndex = r.playIndex
+AND pbp.event = r.event
+SET pbp.runnerId = r.runnerId
+,   pbp.responsiblePitcherId = r.responsiblePitcherId;
+
 
 COMMIT;
 
