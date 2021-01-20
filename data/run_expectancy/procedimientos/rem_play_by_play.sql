@@ -18,6 +18,7 @@ INSERT INTO rem_play_by_play(
     playIndex,
     event,
     runnersBeforePlay,
+    menOnBaseBeforePlay,
     runsScoredBeforePlay,
     outsBeforePlay,
     runsScoredInPlay,
@@ -191,6 +192,11 @@ SELECT
   rb.playIndex,
   rb.event,
   rb.runnersBeforePlay,
+  CASE WHEN rb.runnersBeforePlay = '---' THEN 'Empty'
+       WHEN rb.runnersBeforePlay = '123' THEN 'Loaded'
+       WHEN rb.runnersBeforePlay = '1--' THEN 'Men_On'
+       WHEN rb.runnersBeforePlay IN ( '-23', '-2-', '--3', '1-3' , '12-') THEN 'RISP'
+  END menOnBaseBeforePlay,
   COALESCE(rrb.runsScoredBeforePlay,0) runsScoredBeforePlay,
   COALESCE(ob.outsBeforePlay, 0) outsBeforePlay,
   COALESCE(ori.runsScoredInPlay, 0 ) runsScoredInPlay,

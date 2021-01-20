@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS rem_play_by_play (
   ballsBeforePlay INTEGER,
   event VARCHAR(100),
   runnersBeforePlay VARCHAR(3),
+  menOnBaseBeforePlay VARCHAR(10),
   runsScoredBeforePlay INTEGER,
   outsBeforePlay INTEGER,
   runsScoredInPlay INTEGER,
