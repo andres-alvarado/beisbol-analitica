@@ -27,7 +27,8 @@ CALL game_officials();
 
 -- Run Expectancy
 CALL rem_play_by_play();
-CALL rem_run_expectancy_matrix();
+CALL rem_run_expectancy_matrix( 'majorLeagueId,seasonId', 0, 0, @insert_stmt );
+CALL rem_run_expectancy_matrix( 'majorLeagueId,seasonId,venueId', 0, 0, @insert_stmt );
 CALL rem_event_run_value();
 
 -- Win Expectancy

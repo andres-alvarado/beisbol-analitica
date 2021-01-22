@@ -1,10 +1,10 @@
 USE baseball;
 
-DROP FUNCTION we_generate_table_alias;
+DROP FUNCTION generate_table_alias;
 
 DELIMITER //
 
-CREATE FUNCTION we_generate_table_alias( p_table_alias VARCHAR(10), p_cols VARCHAR(1000) )
+CREATE FUNCTION generate_table_alias( p_table_alias VARCHAR(10), p_cols VARCHAR(1000) )
 RETURNS VARCHAR(1000)
 DETERMINISTIC
 BEGIN

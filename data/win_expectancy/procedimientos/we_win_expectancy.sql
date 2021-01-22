@@ -31,37 +31,26 @@ BEGIN
                               SELECT DISTINCT
                                   seasonId,
                                   majorLeagueId,
-                                  ROUND(seasonId,0) -', p_minus_seasons, ' start_season,
-                                  ROUND(seasonId,0) +', p_plus_seasons, ' end_season
+                                  ROUND(seasonId,0) -', p_minus_seasons, ' startSeason,
+                                  ROUND(seasonId,0) +', p_plus_seasons, ' endSeason
                               FROM games
-                            ), d AS
-                            (
-                              SELECT
-                                  s.seasonId,
-                                  s.start_season,
-                                  s.end_season,
-                                  pbp.scoreDifference,
-                                  pbp.wins,
-                                  pbp.losses,',
-                                  REPLACE(we_generate_table_alias( 'pbp', p_grouping_fields ), 'pbp.seasonId', 'pbp.seasonId AS seasons'),
-                            '  FROM pbp
-                              INNER JOIN s
-                              ON pbp.seasonId BETWEEN s.start_season AND s.end_season
-                              AND pbp.majorLeagueId = s.majorLeagueId
                             )
                               SELECT ',
-                                  p_grouping_fields,',"',
+                                  generate_table_alias( 'pbp', p_grouping_fields ),',"',
                                   p_perspective, '" perspective,',
                             '     scoreDifference,
-                                  MIN(seasons) startSeason,
-                                  MAX(seasons) endSeason,
+                                  IF( MIN(s.seasonId) < ROUND(pbp.seasonId,0) -', p_minus_seasons, ',ROUND(pbp.seasonId,0) -', p_minus_seasons,', MIN(s.seasonId)) startSeason,
+                                  IF( MAX(s.seasonId) > ROUND(pbp.seasonId,0) +', p_plus_seasons, ', ROUND(pbp.seasonId,0) +', p_plus_seasons, ', MAX(s.seasonId)) endSeason,
                                   COUNT( 1 ) AS games,
                                   SUM( wins ) AS wins,
                                   SUM( losses ) AS losses,
                                   SUM( wins ) / COUNT( 1 ) winExpectancy,
                                   agg_grouping_id("', p_grouping_fields, '") groupingId,
                                   agg_grouping_description("', p_grouping_fields, '") groupingDescription
-                              FROM d
+                              FROM pbp
+                              INNER JOIN s
+                              ON pbp.seasonId BETWEEN s.startSeason AND s.endSeason
+                              AND pbp.majorLeagueId = s.majorLeagueId
                               GROUP BY ', p_grouping_fields, ', perspective, scoreDifference'
                             );
 
