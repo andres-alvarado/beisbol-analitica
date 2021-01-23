@@ -21,7 +21,7 @@ Si te interesa conocer más acerca de la información que hemos recolectado para
 
 ## Colaborando con el Proyecto.
 
-Si te interesa colaborar con el proyecto te recomendamos que instales GitHub Desktop, descargues el repositorio de código y aprendas a instalar y ejecutar objetos de Bases de Datos:
+Si te gustaría colaborar con el proyecto te recomendamos que instales GitHub Desktop, descargues el repositorio de código y aprendas a instalar y ejecutar objetos de Bases de Datos:
 
 1. [Instalación de Github Desktop.]
 2. [Descarga del Repositorio de Código.]
