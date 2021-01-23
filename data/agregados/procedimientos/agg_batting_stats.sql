@@ -10,7 +10,8 @@ BEGIN
 /* Para probar este procedimiento hacer: CALL agg_batting_stats( 'majorLeagueId', @insert_stmt);  */
 
 SET @insert_stmt = CONCAT('INSERT INTO agg_batting_stats (', p_grouping_fields,',',
-                          ' atBats,
+                          ' games
+                            atBats,
                             walks,
                             catchersInterference,
                             caughtStealing,
@@ -60,7 +61,8 @@ SET @insert_stmt = CONCAT('INSERT INTO agg_batting_stats (', p_grouping_fields,'
                             )
                             WITH stats AS (
                             SELECT ', p_grouping_fields, ',',
-                            '   SUM(atBats) AS atBats,
+                            '   COUNT(DISTINCT g.gamePk) AS games,
+                                SUM(atBats) AS atBats,
                                 SUM(walks) AS walks,
                                 SUM(catchersInterference) AS catchersInterference,
                                 SUM(caughtStealing) AS caughtStealing,
@@ -152,7 +154,8 @@ SET @insert_stmt = CONCAT('INSERT INTO agg_batting_stats (', p_grouping_fields,'
                             FROM stats
                             )
                             SELECT ', p_grouping_fields,',',
-                          ' atBats,
+                          ' games
+                            atBats,
                             walks,
                             catchersInterference,
                             caughtStealing,
