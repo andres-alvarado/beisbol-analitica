@@ -10,7 +10,6 @@ CREATE TABLE agg_batting_stats (
   venueId INTEGER,
   teamId INTEGER,
   playerId INTEGER,
-  games INTEGER,
   atBats INTEGER,
   walks INTEGER,
   catchersInterference INTEGER,
