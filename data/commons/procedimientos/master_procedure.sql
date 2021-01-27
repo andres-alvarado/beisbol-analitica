@@ -43,6 +43,13 @@ CALL agg_batting_stats( 'majorLeagueId,seasonId,gameType2,teamId,playerId', @ins
 CALL agg_batting_stats( 'majorLeagueId,seasonId,gameType2,venueId,teamId,teamType', @insert_stmt );
 CALL agg_batting_stats( 'majorLeagueId,seasonId,gameType2,teamId,teamType', @insert_stmt );
 
+-- Aggregated Pitching Stats
+CALL agg_pitching_stats( 'majorLeagueId,seasonId,gameType2', @insert_stmt );
+CALL agg_pitching_stats( 'majorLeagueId,seasonId,gameType2,teamId', @insert_stmt );
+CALL agg_pitching_stats( 'majorLeagueId,seasonId,gameType2,teamId,playerId', @insert_stmt );
+CALL agg_pitching_stats( 'majorLeagueId,seasonId,gameType2,venueId,teamId,teamType', @insert_stmt );
+CALL agg_pitching_stats( 'majorLeagueId,seasonId,gameType2,teamId,teamType', @insert_stmt );
+
 -- Clean Staging Tables
 CALL clean_staging_tables();
 
