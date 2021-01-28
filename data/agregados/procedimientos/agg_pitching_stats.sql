@@ -156,7 +156,8 @@ UPDATE
   , onBasePercentage = IF(plateAppearances > 0, (hits + walks + hitBatsmen) / plateAppearances, NULL)
   , onBasePlusSluggingPercentage = COALESCE(IF(plateAppearances > 0, (hits + walks + hitBatsmen) / plateAppearances, NULL), 0) +
                                   COALESCE(IF(atbats > 0, totalBases / atBats, NULL), 0)
-  , isolatedPower = IF(atBats > 0, (doubles + 2 * triples + 3 * homeRuns) / atBats, NULL);
+  , isolatedPower = IF(atBats > 0, (doubles + 2 * triples + 3 * homeRuns) / atBats, NULL)
+WHERE groupingId = agg_grouping_id(p_grouping_fields);
 
 COMMIT;
 
