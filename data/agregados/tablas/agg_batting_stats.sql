@@ -1,8 +1,8 @@
 DROP TABLE agg_batting_stats;
 
 CREATE TABLE agg_batting_stats (
-  grouping_id INTEGER UNSIGNED,
-  grouping_description VARCHAR(255),
+  groupingId INTEGER UNSIGNED,
+  groupingDescription VARCHAR(255),
   majorLeagueId INTEGER,
   seasonId DOUBLE,
   gameType2 VARCHAR(10),
@@ -10,13 +10,13 @@ CREATE TABLE agg_batting_stats (
   venueId INTEGER,
   teamId INTEGER,
   playerId INTEGER,
-  games INTEGER,
   atBats INTEGER,
   walks INTEGER,
   catchersInterference INTEGER,
   caughtStealing INTEGER,
   doubles INTEGER,
   flyOuts INTEGER,
+  games INTEGER,
   groundIntoDoublePlay INTEGER,
   groundIntoTriplePlay INTEGER,
   groundOuts INTEGER,
@@ -33,6 +33,7 @@ CREATE TABLE agg_batting_stats (
   sacFlies INTEGER,
   singles INTEGER,
   stolenBases INTEGER,
+  stolenBaseAttempts INTEGER,
   strikeOuts INTEGER,
   totalBases INTEGER,
   triples INTEGER,
@@ -58,4 +59,4 @@ CREATE TABLE agg_batting_stats (
   battedBallsInPlayPercentage DOUBLE
 ) ENGINE = INNODB;
 
-ALTER TABLE agg_batting_stats ADD INDEX(grouping_id);
+ALTER TABLE agg_batting_stats ADD INDEX(groupingId);
