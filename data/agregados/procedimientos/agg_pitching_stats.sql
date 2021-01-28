@@ -99,11 +99,11 @@ SET @insert_stmt = CONCAT('INSERT INTO agg_pitching_stats (', p_grouping_fields,
                                 SUM(stolenBases) stolenBases,
                                 SUM(strikeOuts) strikeOuts,
                                 SUM(strikes) strikes,
-                                SUM(singles) + SUM(doubles)*2 + SUM(triples)*3 + SUM(homeRuns)*4 totalBases,
                                 SUM(triples) triples,
                                 SUM(unintentionalWalks) unintentionalWalks,
                                 SUM(wildPitches) wildPitches,
                                 SUM(wins) wins,
+                                SUM(singles) + SUM(doubles)*2 + SUM(triples)*3 + SUM(homeRuns)*4 totalBases,
                                 agg_grouping_id("', p_grouping_fields, '") grouping_id,
                                 agg_grouping_description("', p_grouping_fields, '") grouping_description
                             FROM games g
@@ -127,35 +127,18 @@ UPDATE
   , runsPerNineInnings = IF(outs > 0, runs * 27 / outs, NULL)
   , earnedRunsPerNineInnings = IF(outs > 0, earnedRuns * 27 / outs, NULL)
   , walksHitsPerInning = IF(outs > 0, (hits + walks) * 3 / outs, NULL)
-  , fieldIndepedentPitching =  IF(
-      outs > 0,
-      (13 * homeRuns + 3 * (walks + hitBatsmen) - 2 * strikeOuts) * 3 / outs,
-      NULL
-    )
+  , fieldIndepedentPitching =  IF(outs > 0, (13 * homeRuns + 3 * (walks + hitBatsmen) - 2 * strikeOuts) * 3 / outs, NULL )
   , strikeOutPerBattersFaced = IF(battersFaced > 0, strikeOuts / battersFaced, NULL)
   , baseOnBallsPerBattersFaced = IF(battersFaced > 0, walks / battersFaced, NULL)
   , strikeOutsWalksPercentage = IF(battersFaced > 0, (strikeOuts - walks) / battersFaced, NULL)
   , strikeOutsPerWalksPercentage = IF(walks > 0, strikeOuts / walks, NULL)
-  , leftOnBasePercentage = IF(
-      hits + walks + hitBatsmen - 1.4 * homeRuns > 0,
-      (hits + walks + hitBatsmen - runs) / (hits + walks + hitBatsmen - 1.4 * homeRuns),
-      NULL
-    )
+  , leftOnBasePercentage = IF(hits + walks + hitBatsmen - 1.4 * homeRuns > 0, (hits + walks + hitBatsmen - runs) / (hits + walks + hitBatsmen - 1.4 * homeRuns), NULL)
   , opponentsBattingAverage = IF(atbats > 0, hits / atBats, NULL)
-  , battedBallsInPlayPercentage = IF(
-      atBats - strikeOuts - homeRuns - sacFlies > 0,
-      (singles + doubles + triples) / (atBats - strikeOuts - homeRuns - sacFlies),
-      NULL
-    )
+  , battedBallsInPlayPercentage = IF(atBats - strikeOuts - homeRuns - sacFlies > 0, (singles + doubles + triples) / (atBats - strikeOuts - homeRuns - sacFlies), NULL)
   , sluggingPercentage = IF(atBats > 0, totalBases / atBats, NULL)
-  , stolenBasePercentage = IF(
-      caughtStealing + stolenBases > 0,
-      stolenBases / (caughtStealing + stolenBases),
-      NULL
-    )
+  , stolenBasePercentage = IF(caughtStealing + stolenBases > 0, stolenBases / (caughtStealing + stolenBases), NULL)
   , onBasePercentage = IF(plateAppearances > 0, (hits + walks + hitBatsmen) / plateAppearances, NULL)
-  , onBasePlusSluggingPercentage = COALESCE(IF(plateAppearances > 0, (hits + walks + hitBatsmen) / plateAppearances, NULL), 0) +
-                                  COALESCE(IF(atbats > 0, totalBases / atBats, NULL), 0)
+  , onBasePlusSluggingPercentage = IF(plateAppearances > 0, (hits + walks + hitBatsmen) / plateAppearances, 0) + IF(atbats > 0, totalBases / atBats, 0)
   , isolatedPower = IF(atBats > 0, (doubles + 2 * triples + 3 * homeRuns) / atBats, NULL)
 WHERE groupingId = agg_grouping_id(p_grouping_fields);
 
