@@ -1,8 +1,8 @@
 USE baseball;
 
-DROP TABLE park_factors;
+DROP TABLE pf_park_factors;
 
-CREATE TABLE park_factors (
+CREATE TABLE pf_park_factors (
   groupingId INTEGER UNSIGNED,
   groupingDescription VARCHAR(255)
   majorLeagueId INTEGER,
@@ -17,4 +17,4 @@ CREATE TABLE park_factors (
   runParkFactor DOUBLE
 ) ;
 
-ALTER TABLE park_factors ADD INDEX(grouping_id);
+ALTER TABLE pf_park_factors ADD INDEX(grouping_id);
