@@ -75,7 +75,9 @@ CREATE TABLE agg_pitching_stats (
   stolenBasePercentage DOUBLE,
   onBasePercentage DOUBLE,
   onBasePlusSluggingPercentage DOUBLE,
-  isolatedPower DOUBLE
+  isolatedPower DOUBLE,
+  savePercentage DOUBLE,
+  winPercentage DOUBLE
 );
 
 ALTER TABLE agg_pitching_stats ADD INDEX(groupingId);

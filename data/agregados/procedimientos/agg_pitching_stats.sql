@@ -140,6 +140,8 @@ UPDATE
   , onBasePercentage = IF(plateAppearances > 0, (hits + walks + hitBatsmen) / plateAppearances, NULL)
   , onBasePlusSluggingPercentage = IF(plateAppearances > 0, (hits + walks + hitBatsmen) / plateAppearances, 0) + IF(atbats > 0, totalBases / atBats, 0)
   , isolatedPower = IF(atBats > 0, (doubles + 2 * triples + 3 * homeRuns) / atBats, NULL)
+  , savePercentage = IF(saveOpportunities > 0, saves / saveOpportunities, NULL)
+  , winPercentage = IF (wins + losses > 0, wins / (wins + losses), NULL)
 WHERE groupingId = agg_grouping_id(p_grouping_fields);
 
 COMMIT;
