@@ -18,3 +18,4 @@ CREATE TABLE IF NOT EXISTS rem_run_expectancy_matrix (
 );
 
 ALTER TABLE rem_run_expectancy_matrix ADD INDEX(groupingId);
+ALTER TABLE rem_run_expectancy_matrix ADD INDEX(majorLeagueId, seasonId, venueId);

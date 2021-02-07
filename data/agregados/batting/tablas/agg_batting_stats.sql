@@ -55,7 +55,9 @@ CREATE TABLE agg_batting_stats (
   runsCreated DOUBLE,
   powerSpeed DOUBLE,
   runScoredPercentage DOUBLE,
-  battedBallsInPlayPercentage DOUBLE
+  battedBallsInPlayPercentage DOUBLE,
+  weightedOnBaseAverage DOUBLE
 ) ENGINE = INNODB;
 
-ALTER TABLE agg_batting_stats ADD INDEX(grouping_id);
+ALTER TABLE agg_batting_stats ADD INDEX(groupingId);
+ALTER TABLE agg_batting_stats ADD INDEX(majorLeagueId, seasonId, venueId, teamId, playerId);
