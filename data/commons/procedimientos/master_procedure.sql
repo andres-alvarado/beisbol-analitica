@@ -38,13 +38,20 @@ CALL we_win_expectancy( 'majorLeagueId,seasonId,inning,halfInning,gameType2,menO
 
 -- Aggregated Batting Stats
 CALL agg_batting_stats( 'majorLeagueId,seasonId,gameType2', @insert_stmt );
+CALL agg_batting_stats( 'majorLeagueId,seasonId,gameType2,playerId', @insert_stmt );
 CALL agg_batting_stats( 'majorLeagueId,seasonId,gameType2,teamId', @insert_stmt );
 CALL agg_batting_stats( 'majorLeagueId,seasonId,gameType2,teamId,playerId', @insert_stmt );
 CALL agg_batting_stats( 'majorLeagueId,seasonId,gameType2,venueId,teamId,teamType', @insert_stmt );
 CALL agg_batting_stats( 'majorLeagueId,seasonId,gameType2,teamId,teamType', @insert_stmt );
 
+CALL woba( 'majorLeagueId,seasonId,gameType2,playerId', @sql_stmt );
+CALL woba( 'majorLeagueId,seasonId,gameType2,teamId,playerId', @sql_stmt );
+
+
+
 -- Aggregated Pitching Stats
 CALL agg_pitching_stats( 'majorLeagueId,seasonId,gameType2', @insert_stmt );
+CALL agg_pitching_stats( 'majorLeagueId,seasonId,gameType2,playerId', @insert_stmt );
 CALL agg_pitching_stats( 'majorLeagueId,seasonId,gameType2,teamId', @insert_stmt );
 CALL agg_pitching_stats( 'majorLeagueId,seasonId,gameType2,teamId,playerId', @insert_stmt );
 CALL agg_pitching_stats( 'majorLeagueId,seasonId,gameType2,venueId,teamId,teamType', @insert_stmt );
