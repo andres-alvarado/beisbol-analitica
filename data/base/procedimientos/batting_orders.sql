@@ -29,3 +29,5 @@ WHERE
 COMMIT;
 
 END //
+
+DELIMITER ;

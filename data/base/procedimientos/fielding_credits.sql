@@ -33,3 +33,5 @@ WHERE
 COMMIT;
 
 END //
+
+DELIMITER ;
