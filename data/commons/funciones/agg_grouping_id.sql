@@ -12,7 +12,7 @@ BEGIN
     /* Para probar esta funcion hacer: SELECT agg_grouping_id( 'majorLeagueId,seasonId'); */
 
     /* Si se necesita un nuevo campo de agracion, anyadirlo al inicio */
-    DECLARE all_grouping_fields VARCHAR(255) DEFAULT 'halfInning,menOnBaseBeforePlay,battingTeamId,pitchingTeamId,inning,runnersBeforePlay,outsBeforePlay,majorLeagueId,seasonId,gameType2,teamType,venueId,teamId,playerId';
+    DECLARE all_grouping_fields VARCHAR(255) DEFAULT 'positionAbbrev,halfInning,menOnBaseBeforePlay,battingTeamId,pitchingTeamId,inning,runnersBeforePlay,outsBeforePlay,majorLeagueId,seasonId,gameType2,teamType,venueId,teamId,playerId';
 
     DECLARE grouping_id VARCHAR(20) DEFAULT '';
     DECLARE gf VARCHAR(30);
