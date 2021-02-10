@@ -32,9 +32,9 @@ CALL rem_run_expectancy_matrix( 'majorLeagueId,seasonId,venueId', 0, 0, @insert_
 CALL rem_event_run_value();
 
 -- Win Expectancy
-CALL we_win_expectancy( 'majorLeagueId,seasonId,halfInning,gameType2', 'BATTING', 3, 10, 10, @insert_stmt );
-CALL we_win_expectancy( 'majorLeagueId,seasonId,inning,halfInning,gameType2', 'BATTING', 3, 10, 10, @insert_stmt);
-CALL we_win_expectancy( 'majorLeagueId,seasonId,inning,halfInning,gameType2,menOnBaseBeforePlay,outsBeforePlay', 'BATTING', 3, 10, 10, @insert_stmt);
+CALL we_win_expectancy( 'majorLeagueId,seasonId,gameType2', 'BATTING', 1, 10, 10, @insert_stmt );
+CALL we_win_expectancy( 'majorLeagueId,seasonId,inning,gameType2', 'BATTING', 1, 10, 10, @insert_stmt);
+CALL we_win_expectancy( 'majorLeagueId,seasonId,inning,gameType2,menOnBaseBeforePlay,outsBeforePlay', 'BATTING', 1, 10, 10, @insert_stmt);
 
 -- Aggregated Batting Stats
 CALL agg_batting_stats( 'majorLeagueId,seasonId,gameType2', @insert_stmt );
@@ -57,9 +57,9 @@ CALL agg_pitching_stats( 'majorLeagueId,seasonId,gameType2,teamId,teamType', @in
 
 -- Aggregated Fielding Stats
 CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2', @insert_stmt );
-CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2,playerId', @insert_stmt );
+CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2,positionAbbrev,playerId', @insert_stmt );
 CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2,teamId', @insert_stmt );
-CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2,teamId,playerId', @insert_stmt );
+CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2,teamId,positionAbbrev,playerId', @insert_stmt );
 CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2,venueId,teamId,teamType', @insert_stmt );
 CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2,teamId,teamType', @insert_stmt );
 
