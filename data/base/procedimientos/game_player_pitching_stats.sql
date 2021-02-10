@@ -2,6 +2,8 @@ USE baseball;
 
 DROP PROCEDURE game_player_pitching_stats;
 
+DELIMITER //
+
 CREATE PROCEDURE game_player_pitching_stats()
 BEGIN
 
