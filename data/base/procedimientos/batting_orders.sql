@@ -1,13 +1,13 @@
 USE baseball;
 
-DROP PROCEDURE batting_orders;
+DROP PROCEDURE game_batting_orders;
 
 DELIMITER //
 
-CREATE PROCEDURE batting_orders()
+CREATE PROCEDURE game_batting_orders()
 BEGIN
 
-INSERT INTO batting_orders(
+INSERT INTO game_batting_orders(
     gamePk,
     teamId,
     playerId,
@@ -23,7 +23,7 @@ WHERE
   gamePk NOT IN (
     SELECT
       gamePk
-    FROM batting_orders
+    FROM game_batting_orders
   );
 
 COMMIT;
