@@ -8,7 +8,7 @@ CREATE PROCEDURE master_procedure()
 BEGIN
 
 -- Base
-CALL batting_orders();
+CALL game_batting_orders();
 CALL games();
 CALL players();
 CALL officials();
@@ -62,7 +62,6 @@ CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2,teamId', @insert_stmt
 CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2,teamId,positionAbbrev,playerId', @insert_stmt );
 CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2,venueId,teamId,teamType', @insert_stmt );
 CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2,teamId,teamType', @insert_stmt );
-
 
 -- Clean Staging Tables
 CALL clean_staging_tables();

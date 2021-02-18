@@ -81,3 +81,8 @@ CREATE TABLE agg_pitching_stats (
 );
 
 ALTER TABLE agg_pitching_stats ADD INDEX(groupingId);
+ALTER TABLE agg_pitching_stats ADD INDEX(majorLeagueId);
+ALTER TABLE agg_pitching_stats ADD INDEX(seasonId);
+ALTER TABLE agg_pitching_stats ADD INDEX(venueId);
+ALTER TABLE agg_pitching_stats ADD INDEX(teamId);
+ALTER TABLE agg_pitching_stats ADD INDEX(playerId);
