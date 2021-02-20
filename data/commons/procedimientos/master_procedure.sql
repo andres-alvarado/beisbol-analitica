@@ -24,6 +24,8 @@ CALL fielding_credits();
 CALL actions();
 CALL pickoffs();
 CALL game_officials();
+CALL defensive_substitutions();
+CALL game_player_fielding_outs();
 
 -- Run Expectancy
 CALL rem_play_by_play();
