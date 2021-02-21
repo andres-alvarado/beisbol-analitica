@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS rem_event_run_value (
   startRunExpectancy DOUBLE,
   runsScoredInPlay DOUBLE,
   endRunExpectancy DOUBLE,
-  runsScoredEndInning DOUBLE,
+  events INTEGER,
   runValue DOUBLE
 );
 
