@@ -33,9 +33,8 @@ CALL rem_run_expectancy_matrix();
 CALL rem_event_run_value();
 
 -- Win Expectancy
-CALL we_win_expectancy( 'majorLeagueId,seasonId,gameType2', 'BATTING', 1, 10, 10, @insert_stmt );
-CALL we_win_expectancy( 'majorLeagueId,seasonId,inning,gameType2', 'BATTING', 1, 10, 10, @insert_stmt);
-CALL we_win_expectancy( 'majorLeagueId,seasonId,inning,gameType2,menOnBaseBeforePlay,outsBeforePlay', 'BATTING', 1, 10, 10, @insert_stmt);
+CALL we_win_expectancy( 'BATTING' );
+CALL we_win_expectancy( 'PITCHING' );
 
 -- Aggregated Batting Stats
 CALL agg_batting_stats( 'majorLeagueId,seasonId,gameType2', @insert_stmt );

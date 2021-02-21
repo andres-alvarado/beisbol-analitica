@@ -7,19 +7,12 @@ CREATE TABLE IF NOT EXISTS we_win_expectancy (
   groupingDescription VARCHAR(255),
   majorLeagueId INTEGER,
   seasonId DOUBLE,
-  startSeason INTEGER,
-  endSeason INTEGER,
   gameType2 VARCHAR(10),
-  venueId INTEGER,
-  battingTeamId INTEGER,
-  pitchingTeamId INTEGER,
   inning INTEGER,
-  halfInning VARCHAR(10),
-  runnersBeforePlay VARCHAR(3),
   menOnBaseBeforePlay VARCHAR(10),
   outsBeforePlay INTEGER,
   perspective VARCHAR(20),
-  scoreDifference INTEGER,
+  score VARCHAR(10),
   games INTEGER,
   wins INTEGER,
   losses INTEGER,
@@ -27,3 +20,5 @@ CREATE TABLE IF NOT EXISTS we_win_expectancy (
 );
 
 ALTER TABLE we_win_expectancy ADD INDEX( groupingId );
+ALTER TABLE we_win_expectancy ADD INDEX( majorLeagueId );
+ALTER TABLE we_win_expectancy ADD INDEX( seasonId );
