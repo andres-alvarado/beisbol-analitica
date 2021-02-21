@@ -14,12 +14,12 @@ INNER JOIN (
   SELECT
     majorLeagueId,
     seasonId,
-    SUM(IF(event = "Walk", runValue, 0)) weightUnintentionalWalk,
-    SUM(IF(event = "Hit By Pitch", runValue, 0)) weightHitByPitch,
-    SUM(IF(event = "Single", runValue, 0)) weightSingle,
-    SUM(IF(event = "Double", runValue, 0)) weightDouble,
-    SUM(IF(event = "Triple", runValue, 0)) weightTriple,
-    SUM(IF(event = "Home Run", runValue, 0)) weightHomeRun
+    SUM(IF(event = 'Walk', runValue, 0)) weightUnintentionalWalk,
+    SUM(IF(event = 'Hit By Pitch', runValue, 0)) weightHitByPitch,
+    SUM(IF(event = 'Single', runValue, 0)) weightSingle,
+    SUM(IF(event = 'Double', runValue, 0)) weightDouble,
+    SUM(IF(event = 'Triple', runValue, 0)) weightTriple,
+    SUM(IF(event = 'Home Run', runValue, 0)) weightHomeRun
   FROM rem_event_run_value
   GROUP BY
     1, 2
