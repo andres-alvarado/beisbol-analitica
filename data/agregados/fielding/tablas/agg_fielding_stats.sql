@@ -17,7 +17,12 @@ CREATE TABLE agg_fielding_stats (
   games INTEGER,
   putOuts INTEGER,
   totalChances INTEGER,
-  fieldingPercentage DOUBLE
+  outsPlayed INTEGER,
+  inningsPlayed DOUBLE,
+  gamesPlayed DOUBLE,
+  fieldingPercentage DOUBLE,
+  rangeFactorPerInning DOUBLE,
+  rangeFactorPerGame DOUBLE
 );
 
 ALTER TABLE agg_fielding_stats ADD INDEX(groupingId);

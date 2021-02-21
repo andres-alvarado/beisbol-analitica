@@ -7,7 +7,7 @@ DELIMITER //
 CREATE PROCEDURE woba( )
 BEGIN
 
-
+/* Actualizar valores de los pesos en la tabla */
 UPDATE
   agg_batting_stats abs
 INNER JOIN (
@@ -33,6 +33,7 @@ INNER JOIN (
   ,   abs.weightTriple = w.weightTriple
   ,   abs.weightHomeRun = w.weightHomeRun;
 
+/* Calcular wOBA */
 UPDATE
   agg_batting_stats
   SET weightedOnBaseAverage = IF(
@@ -45,8 +46,7 @@ UPDATE
                                 homeRuns * weightHomeRun
                               ) / (atBats + unintentionalWalks + sacFlies + hitByPitch),
                               NULL
-                            )
-WHERE gameType2 = 'RS';
+                            );
 
 COMMIT;
 
