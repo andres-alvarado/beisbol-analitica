@@ -14,7 +14,7 @@ INSERT INTO rem_event_run_value(
     startRunExpectancy,
     runsScoredInPlay,
     endRunExpectancy,
-    runsScoredEndInning,
+    events,
     runValue
   )
 WITH /* Matriz de Expectativa de Carrera */
@@ -24,15 +24,8 @@ run_expectancy_matrix AS (
     seasonId,
     outsBeforePlay,
     runnersBeforePlay,
-    AVG(runsScoredEndInning - runsScoredBeforePlay) runExpectancy
+    ( SUM(runsScoredEndInning) - SUM( runsScoredBeforePlay ) ) / COUNT(1) runExpectancy
   FROM rem_play_by_play
-  WHERE
-    (majorLeagueId, seasonId) NOT IN (
-      SELECT
-        majorLeagueId,
-        seasonId
-      FROM rem_event_run_value
-    )
   GROUP BY
     1, 2, 3, 4
 ),
@@ -78,10 +71,10 @@ run_expectancies AS (
     rpbp.majorLeagueId,
     rpbp.seasonId,
     rpbp.event,
-    AVG(rem.runExpectancy) startRunExpectancy,
-    AVG(runsScoredInPlay) runsScoredInPlay,
-    AVG(rem2.runExpectancy) endRunExpectancy,
-    AVG(runsScoredEndInning - runsScoredBeforePlay) runsScoredEndInning
+    SUM(rem.runExpectancy) startRunExpectancy,
+    SUM(runsScoredInPlay) runsScoredInPlay,
+    SUM(rem2.runExpectancy) endRunExpectancy,
+    COUNT(1) events
   FROM rem_play_by_play_events rpbp
   INNER JOIN run_expectancy_matrix rem
     ON rpbp.majorLeagueId = rem.majorLeagueId
@@ -103,8 +96,8 @@ SELECT
   startRunExpectancy,
   runsScoredInPlay,
   endRunExpectancy,
-  runsScoredEndInning,
-  endRunExpectancy - startRunExpectancy + runsScoredInPlay runValue
+  events,
+  ( endRunExpectancy - startRunExpectancy + runsScoredInPlay ) / events runValue
 FROM run_expectancies;
 
 COMMIT;
