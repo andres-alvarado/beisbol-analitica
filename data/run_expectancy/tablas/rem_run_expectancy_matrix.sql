@@ -9,13 +9,22 @@ CREATE TABLE IF NOT EXISTS rem_run_expectancy_matrix (
   seasonId DOUBLE,
   venueId INTEGER,
   runnersBeforePlay VARCHAR(3),
-  zeroOut DOUBLE,
-  oneOut DOUBLE,
-  twoOut DOUBLE,
-  startSeason INTEGER,
-  endSeason INTEGER,
+  zeroOutsRunsScoredEndInning INTEGER,
+  zeroOutsRunsScoredBeforePlay INTEGER,
+  zeroOutsEvents INTEGER,
+  zeroOutsRunExpectancy DOUBLE,
+  oneOutsRunsScoredEndInning INTEGER,
+  oneOutsRunsScoredBeforePlay INTEGER,
+  oneOutsEvents INTEGER,
+  oneOutsRunExpectancy DOUBLE,
+  twoOutsRunsScoredEndInning INTEGER,
+  twoOutsRunsScoredBeforePlay INTEGER,
+  twoOutsEvents INTEGER,
+  twoOutsRunExpectancy DOUBLE,
   sortingOrder INTEGER
 );
 
 ALTER TABLE rem_run_expectancy_matrix ADD INDEX(groupingId);
-ALTER TABLE rem_run_expectancy_matrix ADD INDEX(majorLeagueId, seasonId, venueId);
+ALTER TABLE rem_run_expectancy_matrix ADD INDEX(majorLeagueId);
+ALTER TABLE rem_run_expectancy_matrix ADD INDEX(seasonId);
+ALTER TABLE rem_run_expectancy_matrix ADD INDEX(venueId);
