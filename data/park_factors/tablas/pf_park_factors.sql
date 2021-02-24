@@ -6,12 +6,12 @@ CREATE TABLE pf_park_factors (
   venueId INTEGER,
   teamId INTEGER,
   homeGames INTEGER,
-  homeScored INTEGER,
-  homeAllowed INTEGER,
+  runsScoredHome INTEGER,
+  runsAllowedHome INTEGER,
   awayGames INTEGER,
-  awayScored INTEGER,
-  awayAllowed INTEGER,
-  runParkFactor DOUBLE
+  runsScoredAway INTEGER,
+  runsAllowedAway INTEGER,
+  runsParkFactor DOUBLE
 ) ;
 
 ALTER TABLE pf_park_factors ADD INDEX(majorLeagueId);
