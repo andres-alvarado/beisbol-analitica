@@ -48,7 +48,7 @@ INSERT INTO pf_park_factors (
 							
 							SELECT hs.majorLeagueId, hs.seasonId, hs.teamId, hs.venueId, hs.games AS homeGames, hs.runs AS runsScoredHome, 
 							ha.runs AS runsAllowedHome, aws.games AS awayGames, aws.runs AS runsScoredAway, aa.runs AS runsAllowedAway,
-						    ((hs.runs + ha.runs / hs.games) / (aws.runs + aa.runs / aws.games)) AS runsParkFactor
+						    (hs.runs + ha.runs) / hs.games / (aws.runs + aa.runs) / aws.games AS runsParkFactor
 							FROM   home_scored hs
 							INNER JOIN away_scored aws
 							ON hs.seasonId = aws.seasonId

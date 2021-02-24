@@ -32,6 +32,9 @@ CALL rem_play_by_play();
 CALL rem_run_expectancy_matrix();
 CALL rem_event_run_value();
 
+-- Park Factors
+CALL pf_park_factors();
+
 -- Win Expectancy
 CALL we_win_expectancy( 'BATTING' );
 CALL we_win_expectancy( 'PITCHING' );
