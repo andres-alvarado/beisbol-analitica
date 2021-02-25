@@ -48,7 +48,6 @@ INSERT INTO pf_park_factors (
       AND gameType2 = 'RS'
       AND teamType = 'away'
   ),
-
   home_allowed AS (
     SELECT
       majorLeagueId,
