@@ -38,8 +38,8 @@ CALL rem_event_run_value();
 CALL pf_park_factors();
 
 -- Win Expectancy
-CALL we_win_expectancy( 'BATTING' );
-CALL we_win_expectancy( 'PITCHING' );
+CALL we_win_expectancy();
+
 
 -- Aggregated Batting Stats
 CALL agg_batting_stats( 'majorLeagueId,seasonId,gameType2', @insert_stmt );

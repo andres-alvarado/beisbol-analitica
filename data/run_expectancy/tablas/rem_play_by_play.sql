@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS rem_play_by_play (
   runsScoredAfterPlay INTEGER,
   outsAfterPlay INTEGER,
   runnersAfterPlay VARCHAR(3),
+  menOnBaseAfterPlay VARCHAR(10),
   runsScoredEndInning INTEGER,
   battingTeamId INTEGER,
   pitchingTeamId INTEGER,

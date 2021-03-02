@@ -276,7 +276,12 @@ INNER JOIN (
         rnp.halfInning,
         rnp.atBatIndex,
         rnp.playIndex,
-        COALESCE(runnersBeforePlay, '---') runnersAfterPlay
+        COALESCE(runnersBeforePlay, '---') runnersAfterPlay,
+        CASE WHEN runnersBeforePlay = '---' OR runnersBeforePlay IS NULL THEN 'Empty'
+             WHEN runnersBeforePlay = '123' THEN 'Loaded'
+             WHEN runnersBeforePlay = '1--' THEN 'Men_On'
+             WHEN runnersBeforePlay IN ( '-23', '-2-', '--3', '1-3' , '12-') THEN 'RISP'
+        END menOnBaseAfterPlay
       FROM rem_next_play rnp
       LEFT JOIN rem_play_by_play pbp
         ON rnp.gamePk = pbp.gamePk
@@ -292,7 +297,8 @@ INNER JOIN (
   AND pbp.halfInning = rap.halfInning
   AND pbp.atBatIndex = rap.atBatIndex
   AND pbp.playIndex = rap.playIndex
-  SET pbp.runnersAfterPlay = rap.runnersAfterPlay;
+  SET pbp.runnersAfterPlay = rap.runnersAfterPlay
+  ,   pbp.menOnBaseAfterPlay = rap.menOnBaseAfterPlay;
 
 /* Actualizar battingTeamId, pitchingTeamId, batterId, pitcherId */
 UPDATE rem_play_by_play pbp
@@ -425,7 +431,6 @@ AND pbp.playIndex = r.playIndex
 AND pbp.event = r.event
 SET pbp.runnerId = r.runnerId
 ,   pbp.responsiblePitcherId = r.responsiblePitcherId;
-
 
 COMMIT;
 
