@@ -99,11 +99,11 @@ SET @insert_stmt = CONCAT('INSERT INTO agg_pitching_stats (', p_grouping_fields,
                                 SUM(stolenBases) stolenBases,
                                 SUM(strikeOuts) strikeOuts,
                                 SUM(strikes) strikes,
+                                SUM(singles) + SUM(doubles)*2 + SUM(triples)*3 + SUM(homeRuns)*4 totalBases,
                                 SUM(triples) triples,
                                 SUM(unintentionalWalks) unintentionalWalks,
                                 SUM(wildPitches) wildPitches,
                                 SUM(wins) wins,
-                                SUM(singles) + SUM(doubles)*2 + SUM(triples)*3 + SUM(homeRuns)*4 totalBases,
                                 agg_grouping_id("', p_grouping_fields, '") grouping_id,
                                 agg_grouping_description("', p_grouping_fields, '") grouping_description
                             FROM games g
