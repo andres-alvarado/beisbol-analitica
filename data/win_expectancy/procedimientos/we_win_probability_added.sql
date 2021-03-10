@@ -41,8 +41,10 @@ SET @insert_stmt = CONCAT('INSERT INTO we_win_probability_added (', p_grouping_f
                               battingTeamId,
                               pitchingTeamId,
                               batterId,
+                              batSide,
                               runnerId,
                               pitcherId,
+                              pitchHand,
                               menOnBaseBeforePlay,
                               outsBeforePlay,
                               -- Hay poca informacion para extra innings, agregando extra innings como 10
@@ -71,7 +73,9 @@ SET @insert_stmt = CONCAT('INSERT INTO we_win_probability_added (', p_grouping_f
                               pbp.battingTeamId,
                               pbp.pitchingTeamId,
                               pbp.batterId,
+                              pbp.batSide,
                               pbp.pitcherId,
+                              pbp.pitchHand,
                               pbp.runnerId,
                               a.winExpectancy - b.winExpectancy AS offensiveWinProbabilityAdded,
                               -1 * (a.winExpectancy - b.winExpectancy) AS defensiveWinProbabilityAdded
@@ -96,7 +100,9 @@ SET @insert_stmt = CONCAT('INSERT INTO we_win_probability_added (', p_grouping_f
                             agg_grouping_description("', p_grouping_fields, '") groupingDescription,
                             agg_grouping_description("', p_fields, '") groupingFields
                           FROM data
-                          GROUP BY ', p_fields
+                          WHERE ', IF( p_fields LIKE '%batterId%', 'runnerId Is Null', 'TRUE' ),
+                          ' AND ', IF( p_fields LIKE '%runnerId%' , 'runnerId Is Not Null', 'TRUE' ),
+                          ' GROUP BY ', p_fields
                         );
 
 SELECT @insert_stmt;
