@@ -8,7 +8,7 @@ CREATE PROCEDURE teams()
 BEGIN
 
 INSERT INTO teams(
-    leagueId,
+    majorLeagueId,
     divisionId,
     seasonId,
     teamId,
@@ -23,7 +23,7 @@ INSERT INTO teams(
     locationName
   )
   SELECT DISTINCT
-  leagueID,
+  leagueId,
   divisionId,
   COALESCE(season, 0) seasonId,
   id AS teamId,

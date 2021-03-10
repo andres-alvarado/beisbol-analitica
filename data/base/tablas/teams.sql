@@ -3,7 +3,7 @@ USE baseball;
 DROP TABLE teams;
 
 CREATE TABLE teams (
-  leagueId VARCHAR(10),
+  majorLeagueId VARCHAR(10),
   divisionId INTEGER,
   seasonId VARCHAR(20),
   teamId INTEGER,
@@ -18,4 +18,4 @@ CREATE TABLE teams (
   locationName VARCHAR(100)
 ) ENGINE = INNODB;
 
-ALTER TABLE teams ADD PRIMARY KEY(leagueId, seasonId, teamId);
+ALTER TABLE teams ADD PRIMARY KEY(majorLeagueId, seasonId, teamId);
