@@ -308,7 +308,9 @@ AND pbp.atbatIndex = ab.atBatIndex
 SET pbp.battingTeamId = ab.battingTeamId
 ,   pbp.pitchingTeamId = ab.pitchingTeamId
 ,   pbp.batterId = ab.batterId
-,   pbp.pitcherId = ab.pitcherId;
+,   pbp.pitcherId = ab.pitcherId
+,   pbp.batSide =  ab.batSide
+,   pbp.pitchHand = ab.pitchHand;
 
 /* Actualizar scheduledInnings, battingTeamScoreEndGame,  pitchingTeamScoreEndGame */
 UPDATE
