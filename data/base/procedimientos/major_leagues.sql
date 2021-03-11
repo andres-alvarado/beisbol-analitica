@@ -1,13 +1,13 @@
 USE baseball;
 
-DROP PROCEDURE majorLeagues;
+DROP PROCEDURE major_leagues;
 
 DELIMITER //
 
-CREATE PROCEDURE majorLeagues()
+CREATE PROCEDURE major_leagues()
 BEGIN
 
-INSERT INTO majorLeagues(
+INSERT INTO major_leagues(
     majorLeagueId,
     majorLeague
 )
