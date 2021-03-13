@@ -60,6 +60,21 @@ CALL agg_batting_stats( 'majorLeagueId,seasonId,gameType2,teamId,playerId', @ins
 CALL agg_batting_stats( 'majorLeagueId,seasonId,gameType2,venueId,teamId,teamType', @insert_stmt );
 CALL agg_batting_stats( 'majorLeagueId,seasonId,gameType2,teamId,teamType', @insert_stmt );
 
+-- Aggregated Batting Split Stats
+CALL agg_batting_split_stats( 'majorLeagueId,seasonId,gameType2,batSide', @insert_stmt );
+CALL agg_batting_split_stats( 'majorLeagueId,seasonId,gameType2,pitchHand', @insert_stmt );
+CALL agg_batting_split_stats( 'majorLeagueId,seasonId,gameType2,playerId,batSide', @insert_stmt );
+CALL agg_batting_split_stats( 'majorLeagueId,seasonId,gameType2,playerId,pitchHand', @insert_stmt );
+CALL agg_batting_split_stats( 'majorLeagueId,seasonId,gameType2,teamId,batSide', @insert_stmt );
+CALL agg_batting_split_stats( 'majorLeagueId,seasonId,gameType2,teamId,pitchHand', @insert_stmt );
+CALL agg_batting_split_stats( 'majorLeagueId,seasonId,gameType2,teamId,playerId,batSide', @insert_stmt );
+CALL agg_batting_split_stats( 'majorLeagueId,seasonId,gameType2,teamId,playerId,pitchHand', @insert_stmt );
+CALL agg_batting_split_stats( 'majorLeagueId,seasonId,gameType2,teamId,batSide,pitchHand', @insert_stmt );
+CALL agg_batting_split_stats( 'majorLeagueId,seasonId,gameType2,venueId,teamId,teamType,batSide', @insert_stmt );
+CALL agg_batting_split_stats( 'majorLeagueId,seasonId,gameType2,venueId,teamId,teamType,pitchHand', @insert_stmt );
+
+-- Derived metrics
+CALL agg_batting_derived_metrics();
 CALL woba();
 
 -- Aggregated Pitching Stats
