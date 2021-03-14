@@ -28,6 +28,7 @@ CREATE TABLE game_player_split_stats (
   lineOuts INTEGER,
   passedBalls INTEGER,
   popOuts INTEGER,
+  runsBattedIn INTEGER,
   sacBunts INTEGER,
   sacFlies INTEGER,
   singles INTEGER,

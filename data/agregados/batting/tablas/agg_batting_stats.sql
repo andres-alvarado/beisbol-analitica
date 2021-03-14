@@ -40,7 +40,7 @@ CREATE TABLE agg_batting_stats (
   pickoffs INTEGER,
   plateAppearances INTEGER,
   popOuts INTEGER,
-  rbi INTEGER,
+  runsBattedIn INTEGER,
   runs INTEGER,
   sacBunts INTEGER,
   sacFlies INTEGER,

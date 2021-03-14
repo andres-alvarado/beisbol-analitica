@@ -33,6 +33,7 @@ INSERT INTO game_player_split_stats(
     lineOuts,
     passedBalls,
     popOuts,
+    runsBattedIn,
     sacBunts,
     sacFlies,
     singles,
@@ -68,6 +69,7 @@ SELECT
   SUM(IF(event = 'Lineout', 1, 0)) AS lineOuts,
   SUM(IF(event = 'Passed Ball', 1, 0)) AS passedBalls,
   SUM(IF(event = 'Pop Out', 1, 0)) AS popOuts,
+  SUM(rbi) AS runsBattedIn,
   SUM(IF(event IN ('Sac Bunt', 'Sac Bunt Double Play'), 1, 0)) AS sacBunts,
   SUM(IF(event IN ('Sac Fly', 'Sac Fly Double Play'), 1, 0)) AS sacFlies,
   SUM(IF(event = 'Single', 1, 0)) AS singles,
@@ -78,33 +80,6 @@ SELECT
   SUM(IF(event = 'Walk', 1, 0)) AS walks,
   SUM(IF(event = 'Wild Pitch', 1, 0)) AS wildPitches
 FROM atbats
-WHERE
-  event NOT IN (
-    'Caught Stealing 2B',
-    'Caught Stealing 3B',
-    'Caught Stealing Home',
-    'Defensive Sub',
-    'Defensive Switch',
-    'Ejection',
-    'Offensive Substitution',
-    'Other Advance',
-    'Pickoff 1B',
-    'Pickoff 2B',
-    'Pickoff 3B',
-    'Pickoff Caught Stealing 2B',
-    'Pickoff Caught Stealing 3B',
-    'Pickoff Caught Stealing Home',
-    'Pickoff Error 1B',
-    'Pickoff Error 2B',
-    'Pickoff Error 3B',
-    'Pitching Substitution',
-    'Stolen Base 2B',
-    'Stolen Base 3B',
-    'Stolen Base Home',
-    'Game Advisory',
-    'Runner Double Play',
-    'Runner Out'
-  )
 GROUP BY 1,2,3,4,5,6,7;
 
 COMMIT;
