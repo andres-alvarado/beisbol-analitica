@@ -14,6 +14,7 @@ CREATE TABLE agg_batting_stats (
   playerId INTEGER,
   batSide VARCHAR(1),
   pitchHand VARCHAR(1),
+  menOnBase VARCHAR(10),
   games INTEGER,
   atBats INTEGER,
   balks INTEGER,
