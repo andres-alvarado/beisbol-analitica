@@ -1,3 +1,5 @@
+USE baseball;
+
 DROP TABLE agg_batting_stats;
 
 CREATE TABLE agg_batting_stats (
