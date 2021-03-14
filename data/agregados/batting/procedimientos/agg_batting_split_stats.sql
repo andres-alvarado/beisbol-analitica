@@ -69,6 +69,7 @@ SET @insert_stmt = CONCAT('INSERT INTO agg_batting_stats (', p_grouping_fields,'
                                 bs.batterId AS playerId,
                                 batSide,
                                 pitchHand,
+                                menOnBase,
                                 batterInterferences + bunts + doubles + fanInterferences + fieldErrors + fieldersChoice
                               + flyouts + forceOuts + groundedIntoDoublePlays + triplePlays + groundOuts + homeRuns
                               + lineOuts + popOuts + singles + strikeOuts + triples AS atbats,

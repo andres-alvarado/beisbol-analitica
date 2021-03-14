@@ -10,6 +10,7 @@ CREATE TABLE game_player_split_stats (
   pitchingTeamId INTEGER,
   pitcherId INTEGER,
   pitchHand VARCHAR(1),
+  menOnBase VARCHAR(10),
   balks INTEGER,
   batterInterferences INTEGER,
   bunts INTEGER,

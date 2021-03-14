@@ -15,6 +15,7 @@ INSERT INTO game_player_split_stats(
     pitchingTeamId,
     pitcherId,
     pitchHand,
+    menOnBase,
     balks,
     batterInterferences,
     bunts,
@@ -51,6 +52,7 @@ SELECT
   pitchingTeamId,
   pitcherId,
   pitchHand,
+  menOnBase,
   SUM(IF(event = 'Balk', 1, 0)) AS balks,
   SUM(IF(event = 'Batter Interference', 1, 0)) AS batterInterferences,
   SUM(IF(event IN ('Bunt Groundout', 'Bunt Lineout', 'Bunt Pop Out'), 1, 0)) AS bunts,
@@ -80,7 +82,7 @@ SELECT
   SUM(IF(event = 'Walk', 1, 0)) AS walks,
   SUM(IF(event = 'Wild Pitch', 1, 0)) AS wildPitches
 FROM atbats
-GROUP BY 1,2,3,4,5,6,7;
+GROUP BY 1,2,3,4,5,6,7,8;
 
 COMMIT;
 
