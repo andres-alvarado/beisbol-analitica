@@ -11,11 +11,17 @@ BEGIN
 
 SET @insert_stmt = CONCAT('INSERT INTO agg_batting_stats (', p_grouping_fields,',',
                           ' atBats,
-                            walks,
+                            balks,
+                            batterInterferences,
+                            bunts,
                             catcherInterferences,
                             caughtStealing,
                             doubles,
+                            fanInterferences,
+                            fieldErrors,
+                            fieldersChoice,
                             flyOuts,
+                            forceOuts,
                             games,
                             groundedIntoDoublePlays,
                             groundedIntoTriplePlays,
@@ -25,29 +31,54 @@ SET @insert_stmt = CONCAT('INSERT INTO agg_batting_stats (', p_grouping_fields,'
                             homeRuns,
                             intentionalWalks,
                             leftOnBase,
+                            lineOuts,
+                            passedBalls,
                             pickoffs,
-                            plateAppearances,
+                            popOuts,
                             rbi,
                             runs,
                             sacBunts,
                             sacFlies,
-                            singles,
                             stolenBases,
-                            stolenBaseAttempts,
                             strikeOuts,
-                            totalBases,
                             triples,
-                            unintentionalWalks,
+                            walks,
+                            wildPitches,
                             groupingId,
                             groupingDescription
                             )
+                            WITH game_split_stats AS
+                            (
+                            SELECT
+                                gamePk,
+                                batterId,
+                                SUM(balks) AS balks,
+                                SUM(batterInterferences) AS batterInterferences,
+                                SUM(bunts) AS bunts,
+                                SUM(fanInterferences) AS fanInterferences,
+                                SUM(fieldErrors) AS fieldErrors,
+                                SUM(fieldersChoice) AS fieldersChoice,
+                                SUM(forceOuts) AS forceOuts,
+                                SUM(lineOuts) AS lineOuts,
+                                SUM(passedBalls) AS passedBalls,
+                                SUM(popOuts) AS popOuts,
+                                SUM(wildPitches) AS wildPitches
+                            FROM game_player_split_stats
+                            GROUP BY 1, 2
+                            )
                             SELECT ', p_grouping_fields, ',',
                             '   SUM(atBats) AS atBats,
-                                SUM(walks) AS walks,
+                                SUM(balks) AS balks,
+                                SUM(batterInterferences) AS batterInterferences,
+                                SUM(bunts) AS bunts,
                                 SUM(catchersInterference) AS catcherInterferences,
                                 SUM(caughtStealing) AS caughtStealing,
                                 SUM(doubles) AS doubles,
+                                SUM(fanInterferences) AS fanInterferences,
+                                SUM(fieldErrors) AS fieldErrors,
+                                SUM(fieldersChoice) AS fieldersChoice,
                                 SUM(flyOuts) AS flyOuts,
+                                SUM(forceOuts) AS forceOuts,
                                 COUNT(DISTINCT g.gamePk) AS games,
                                 SUM(groundIntoDoublePlay) AS groundedIntoDoublePlays,
                                 SUM(groundIntoTriplePlay) AS groundedIntoTriplePlays,
@@ -57,24 +88,27 @@ SET @insert_stmt = CONCAT('INSERT INTO agg_batting_stats (', p_grouping_fields,'
                                 SUM(homeRuns) AS homeRuns,
                                 SUM(intentionalWalks) AS intentionalWalks,
                                 SUM(leftOnBase) AS leftOnBase,
+                                SUM(lineOuts) AS lineOuts,
+                                SUM(passedBalls) AS passedBalls,
                                 SUM(pickoffs) AS pickoffs,
-                                SUM(atBats) + SUM(sacBunts) + SUM(sacFlies) + SUM(walks) + SUM(hitByPitch) AS plateAppearances,
+                                SUM(popOuts) AS popOuts,
                                 SUM(rbi) AS rbi,
                                 SUM(runs) AS runs,
                                 SUM(sacBunts) AS sacBunts,
                                 SUM(sacFlies) AS sacFlies,
-                                SUM(hits) - SUM(homeRuns) - SUM(doubles) - SUM(triples) AS singles,
                                 SUM(stolenBases) AS stolenBases,
-                                SUM(caughtStealing) + SUM(stolenBases) stolenBaseAttempts,
                                 SUM(strikeOuts) AS strikeOuts,
-                                SUM(singles) + SUM(doubles)*2 + SUM(triples)*3 + SUM(homeRuns)*4 totalBases,
                                 SUM(triples) AS triples,
-                                SUM(walks) - SUM(intentionalWalks) AS unintentionalWalks,
+                                SUM(walks) AS walks,
+                                SUM(wildPitches) AS wildPitches,
                                 agg_grouping_id("', p_grouping_fields, '") groupingId,
                                 agg_grouping_description("', p_grouping_fields, '") groupingDescription
                             FROM games g
                             INNER JOIN game_player_batting_stats bs
                                 ON g.gamePk = bs.gamePk
+                            INNER JOIN game_split_stats ss
+                                ON bs.gamePk = ss.gamePk
+                                AND bs.playerId = ss.batterId
                             WHERE gameType2 IN ("PS","RS")
                             GROUP BY ',
                                 p_grouping_fields
