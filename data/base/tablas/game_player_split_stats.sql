@@ -4,6 +4,7 @@ DROP TABLE game_player_split_stats;
 
 CREATE TABLE game_player_split_stats (
   gamePk INTEGER,
+  atBatIndex INTEGER,
   battingTeamId INTEGER,
   batterId INTEGER,
   batSide VARCHAR(1),
@@ -11,6 +12,7 @@ CREATE TABLE game_player_split_stats (
   pitcherId INTEGER,
   pitchHand VARCHAR(1),
   menOnBase VARCHAR(10),
+  -- These metrics come from atbats
   balks INTEGER,
   batterInterferences INTEGER,
   bunts INTEGER,
@@ -37,7 +39,51 @@ CREATE TABLE game_player_split_stats (
   triples INTEGER,
   triplePlays INTEGER,
   walks INTEGER,
-  wildPitches INTEGER
+  wildPitches INTEGER,
+  -- These metrics come from pitches
+  balls INTEGER,
+  ballsPitchOut INTEGER,
+  ballsInDirt INTEGER,
+  intentBalls INTEGER,
+  fouls INTEGER,
+  foulBunts INTEGER,
+  foulTips INTEGER,
+  foulPitchOuts INTEGER,
+  hitIntoPlay INTEGER,
+  pitches INTEGER,
+  pitchOuts INTEGER,
+  strikes INTEGER,
+  strikesCalled INTEGER,
+  strikesPitchOuts INTEGER,
+  missedBunts INTEGER,
+  swingAndMissStrikes INTEGER,
+  swingsPitchOuts INTEGER,
+  swings INTEGER,
+  -- Swings Per Ball and Strikes
+  -- 0 Ball(s)
+  swingsZeroAndZero INTEGER,
+  swingsZeroAndOne INTEGER,
+  swingsZeroAndTwo INTEGER,
+  -- 1 Ball(s)
+  swingsOneAndZero INTEGER,
+  swingsOneAndOne INTEGER,
+  swingsOneAndTwo INTEGER,
+  -- 2 Ball(s)
+  swingsTwoAndZero INTEGER,
+  swingsTwoAndOne INTEGER,
+  swingsTwoAndTwo INTEGER,
+  -- 3 Ball(s)
+  swingsThreeAndZero INTEGER,
+  swingsThreeAndOne INTEGER,
+  swingsThreeAndTwo INTEGER,
+  -- Trajectories
+  flyBalls INTEGER,
+  groundBalls INTEGER,
+  lineDrives INTEGER,
+  popUps INTEGER,
+  groundBunts INTEGER,
+  popupBunts INTEGER,
+  lineDriveBunts INTEGER
 );
 
 ALTER TABLE game_player_split_stats ADD INDEX(gamePk, battingTeamId, batterId);
