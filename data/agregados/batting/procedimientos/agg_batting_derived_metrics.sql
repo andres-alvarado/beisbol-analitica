@@ -44,6 +44,26 @@ UPDATE
   , walksPerPlateAppearancesPercentage = IF(plateAppearances > 0, walks / plateAppearances, NULL)
   , walksPerStrikeOutsPercentage = IF(strikeOuts > 0, walks / strikeOuts, NULL);
 
+UPDATE
+  agg_batting_stats
+  SET zeroAndZeroSwingPercentage =IF( plateAppearances > 0, swingsZeroAndZero / plateAppearances, NULL ),
+      zeroAndOneSwingPercentage = IF( plateAppearances > 0, swingsZeroAndOne  / plateAppearances, NULL ),
+      zeroAndTwoSwingPercentage = IF( plateAppearances > 0, swingsZeroAndTwo  / plateAppearances, NULL ),
+      -- 1 Ball(s)
+      oneAndZeroSwingPercentage = IF( plateAppearances > 0, swingsOneAndZero  / plateAppearances, NULL ),
+      oneAndOneSwingPercentage = IF( plateAppearances > 0, swingsOneAndOne  / plateAppearances, NULL ),
+      oneAndTwoSwingPercentage = IF( plateAppearances > 0, swingsOneAndTwo  / plateAppearances, NULL ),
+      -- 2 Ball(s)
+      twoAndZeroSwingPercentage = IF( plateAppearances > 0, swingsTwoAndZero  / plateAppearances, NULL ),
+      twoAndOneSwingPercentage = IF( plateAppearances > 0, swingsTwoAndOne  / plateAppearances, NULL ),
+      twoAndTwoSwingPercentage = IF( plateAppearances > 0, swingsTwoAndTwo  / plateAppearances, NULL ),
+      -- 3 Ball(s)
+      threeAndZeroSwingPercentage = IF( plateAppearances > 0, swingsThreeAndZero  / plateAppearances, NULL ),
+      threeAndOneSwingPercentage = IF( plateAppearances > 0, swingsThreeAndOne  / plateAppearances, NULL ),
+      threeAndTwoSwingPercentage = IF( plateAppearances > 0, swingsThreeAndTwo  / plateAppearances, NULL );
+
+  COMMIT;
+
 END //
 
 DELIMITER ;

@@ -40,7 +40,7 @@ UPDATE
                               atBats + unintentionalWalks + sacFlies + hitByPitch > 0,
                               (
                                 unintentionalWalks * weightUnintentionalWalk +
-								hitByPitch * weightHitByPitch +
+								                hitByPitch * weightHitByPitch +
                                 singles * weightSingle +
                                 doubles * weightDouble +
                                 triples * weightTriple +
