@@ -49,9 +49,27 @@ rem_play_by_play_events AS (
       WHEN event IN ('Grounded Into DP', 'Runner Double Play') THEN 'Double Play'
       WHEN event IN ('Pickoff Caught Stealing 2B') THEN 'Caught Stealing 2B'
       WHEN event IN ('Pickoff Caught Stealing 3B') THEN 'Caught Stealing 3B'
-      When event In ('Pickoff Caught Stealing Home') THEN 'Caught Stealing Home'
+      When event IN ('Pickoff Caught Stealing Home') THEN 'Caught Stealing Home'
       WHEN event IN ('Sac Bunt Double Play') THEN 'Sac Bunt'
-      WHEN event IN (
+      ELSE event
+    END event
+  FROM rem_play_by_play
+
+  UNION ALL
+
+  SELECT
+    majorLeagueId,
+    seasonId,
+    runnersBeforePlay,
+    runsScoredBeforePlay,
+    outsBeforePlay,
+    runsScoredInPlay,
+    outsAfterPlay,
+    runnersAfterPlay,
+    runsScoredEndInning,
+    'Out' AS event
+  FROM rem_play_by_play
+  WHERE event IN (
         'Field Out',
         'Flyout',
         'Forceout',
@@ -59,11 +77,32 @@ rem_play_by_play_events AS (
         'Fielders Choice Out',
         'Lineout',
         'Pop Out',
-        'Runner Out'
-      ) THEN 'Out'
-      ELSE event
-    END event
-  FROM rem_play_by_play
+        'Runner Out',
+        'Sac Bunt Double Play',
+        'Sac Bunt',
+        'Bunt Groundout',
+        'Bunt Lineout',
+        'Bunt Pop Out',
+        'Sac Fly Double Play',
+        'Sac Fly',
+        'Strikeout Double Play',
+        'Strikeout Triple Play',
+        'Strikeout',
+        'Grounded Into DP',
+        'Runner Double Play',
+        'Double Play',
+        'Pickoff Caught Stealing 2B',
+        'Caught Stealing 2B',
+        'Pickoff Caught Stealing 3B',
+        'Caught Stealing 3B',
+        'Pickoff Caught Stealing Home',
+        'Caught Stealing Home',
+        'Field Out',
+        'Fielders Choice',
+        'Pickoff 1B',
+        'Pickoff 2B',
+        'Pickoff 3B'
+      )
 ),
 /* Calcular run expectancies al inicio, durante y final de jugada */
 run_expectancies AS (
