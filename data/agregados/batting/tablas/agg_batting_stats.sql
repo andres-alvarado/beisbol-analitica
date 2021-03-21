@@ -82,6 +82,10 @@ CREATE TABLE agg_batting_stats (
   weightDouble DOUBLE,
   weightTriple DOUBLE,
   weightHomeRun DOUBLE,
+  -- OPS +
+  leagueOnBasePercentage DOUBLE,
+  leagueSluggingPercentage DOUBLE,
+  onBasePlusSluggingPercentagePlus DOUBLE,
   -- These come from the pitches table
   -- These metrics come from the pitches table
   balls INTEGER,
@@ -146,6 +150,7 @@ CREATE TABLE agg_batting_stats (
 ) ENGINE = INNODB;
 
 ALTER TABLE agg_batting_stats ADD INDEX(groupingId);
+ALTER TABLE agg_batting_stats ADD INDEX(groupingDescription(255));
 ALTER TABLE agg_batting_stats ADD INDEX(majorLeagueId);
 ALTER TABLE agg_batting_stats ADD INDEX(seasonId);
 ALTER TABLE agg_batting_stats ADD INDEX(venueId);

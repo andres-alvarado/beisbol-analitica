@@ -31,7 +31,8 @@ INNER JOIN (
   ,   abs.weightSingle = w.weightSingle
   ,   abs.weightDouble = w.weightDouble
   ,   abs.weightTriple = w.weightTriple
-  ,   abs.weightHomeRun = w.weightHomeRun;
+  ,   abs.weightHomeRun = w.weightHomeRun
+  WHERE groupingDescription = 'MAJORLEAGUEID_SEASONID_GAMETYPE2_PLAYERID';
 
 /* Calcular wOBA */
 UPDATE
@@ -47,7 +48,8 @@ UPDATE
                                 homeRuns * weightHomeRun
                               ) / (atBats + unintentionalWalks + sacFlies + hitByPitch),
                               NULL
-                            );
+                            )
+  WHERE groupingDescription = 'MAJORLEAGUEID_SEASONID_GAMETYPE2_PLAYERID';
 
 COMMIT;
 
