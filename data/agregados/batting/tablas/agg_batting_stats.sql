@@ -88,6 +88,10 @@ CREATE TABLE agg_batting_stats (
   weightedOnBaseAverageScale DOUBLE,
   leagueWeightedOnBaseAverageRelativeToOuts DOUBLE,
   weightedRunsAboveAverage DOUBLE,
+  -- wRC
+  leagueRuns INTEGER,
+  leaguePlateAppearances INTEGER,
+  weightedRunsCreated DOUBLE,
   -- OPS +
   leagueOnBasePercentage DOUBLE,
   leagueSluggingPercentage DOUBLE,
