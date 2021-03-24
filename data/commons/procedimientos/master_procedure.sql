@@ -79,6 +79,8 @@ CALL agg_batting_split_stats( 'majorLeagueId,seasonId,gameType2,venueId,teamId,t
 -- Derived metrics
 CALL agg_batting_derived_metrics();
 CALL woba();
+CALL wraa();
+CALL wrc();
 CALL ops_plus();
 
 -- Aggregated Pitching Stats

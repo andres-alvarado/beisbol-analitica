@@ -19,7 +19,8 @@ INNER JOIN (
     SUM(IF(event = 'Single', runValue, 0)) weightSingle,
     SUM(IF(event = 'Double', runValue, 0)) weightDouble,
     SUM(IF(event = 'Triple', runValue, 0)) weightTriple,
-    SUM(IF(event = 'Home Run', runValue, 0)) weightHomeRun
+    SUM(IF(event = 'Home Run', runValue, 0)) weightHomeRun,
+    SUM(IF(event = 'Out', runValue, 0)) weightOut
   FROM rem_event_run_value
   GROUP BY
     1, 2
@@ -32,7 +33,10 @@ INNER JOIN (
   ,   abs.weightDouble = w.weightDouble
   ,   abs.weightTriple = w.weightTriple
   ,   abs.weightHomeRun = w.weightHomeRun
-  WHERE groupingDescription = 'MAJORLEAGUEID_SEASONID_GAMETYPE2_PLAYERID';
+  ,   abs.weightOut = w.weightOut
+  WHERE groupingDescription IN( 'MAJORLEAGUEID_SEASONID_GAMETYPE2',
+                                'MAJORLEAGUEID_SEASONID_GAMETYPE2_PLAYERID'
+                              );
 
 /* Calcular wOBA */
 UPDATE
@@ -48,8 +52,22 @@ UPDATE
                                 homeRuns * weightHomeRun
                               ) / (atBats + unintentionalWalks + sacFlies + hitByPitch),
                               NULL
-                            )
-  WHERE groupingDescription = 'MAJORLEAGUEID_SEASONID_GAMETYPE2_PLAYERID';
+                            ),
+  weightedOnBaseAverageRelativeToOuts = IF(
+                              atBats + unintentionalWalks + sacFlies + hitByPitch > 0,
+                              (
+                                unintentionalWalks * ( weightUnintentionalWalk + ABS(weightOut) ) +
+								                hitByPitch * ( weightHitByPitch + ABS(weightOut) ) +
+                                singles * ( weightSingle + ABS(weightOut) ) +
+                                doubles * ( weightDouble + ABS(weightOut) ) +
+                                triples * ( weightTriple + ABS(weightOut) ) +
+                                homeRuns * ( weightHomeRun + ABS(weightOut) )
+                              ) / (atBats + unintentionalWalks + sacFlies + hitByPitch),
+                              NULL
+                            ),
+  WHERE groupingDescription IN( 'MAJORLEAGUEID_SEASONID_GAMETYPE2',
+                                'MAJORLEAGUEID_SEASONID_GAMETYPE2_PLAYERID'
+                              );
 
 COMMIT;
 
