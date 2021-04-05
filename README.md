@@ -1,7 +1,3 @@
-
-![alt text](https://ibb.co/C2xWPn8)
-
-
 # Beisbol Analítica
 
 Proyecto de Código Libre que tiene como objetivo facilitar herramientas e información a los analistas y equipos de Beisbol Latinoamericanos.
