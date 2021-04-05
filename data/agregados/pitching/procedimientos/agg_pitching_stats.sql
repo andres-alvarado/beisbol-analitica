@@ -12,11 +12,10 @@ BEGIN
 SET @insert_stmt = CONCAT('INSERT INTO agg_pitching_stats (', p_grouping_fields,',',
                           ' airOuts,
                             atBats,
-                            balls,
                             walks,
                             battersFaced,
                             blownSaves,
-                            catchersInterference,
+                            catcherInterferences,
                             caughtStealing,
                             completeGames,
                             doubles,
@@ -49,23 +48,121 @@ SET @insert_stmt = CONCAT('INSERT INTO agg_pitching_stats (', p_grouping_fields,
                             shutouts,
                             stolenBases,
                             strikeOuts,
-                            strikes,
-                            totalBases,
                             triples,
                             unintentionalWalks,
                             wildPitches,
                             wins,
+                            -- Coming from the pitches tables
+                            balls,
+                            ballsPitchOut,
+                            ballsInDirt,
+                            intentBalls,
+                            fouls,
+                            foulBunts,
+                            foulTips,
+                            foulPitchOuts,
+                            hitIntoPlay,
+                            pitches,
+                            pitchOuts,
+                            strikes,
+                            strikesCalled,
+                            strikesPitchOuts,
+                            missedBunts,
+                            swingAndMissStrikes,
+                            swingsPitchOuts,
+                            swings,
+                            swingsZeroAndZero,
+                            swingsZeroAndOne,
+                            swingsZeroAndTwo,
+                            swingsOneAndZero,
+                            swingsOneAndOne,
+                            swingsOneAndTwo,
+                            swingsTwoAndZero,
+                            swingsTwoAndOne,
+                            swingsTwoAndTwo,
+                            swingsThreeAndZero,
+                            swingsThreeAndOne,
+                            swingsThreeAndTwo,
+                            flyBalls,
+                            groundBalls,
+                            lineDrives,
+                            popUps,
+                            groundBunts,
+                            popupBunts,
+                            lineDriveBunts,
                             groupingId,
                             groupingDescription
+                            )
+                            WITH game_split_stats AS
+                            (
+                            SELECT
+                                gamePk,
+                                pitcherId,
+                                SUM(balks) AS balks,
+                                SUM(batterInterferences) AS batterInterferences,
+                                SUM(bunts) AS bunts,
+                                SUM(fanInterferences) AS fanInterferences,
+                                SUM(fieldErrors) AS fieldErrors,
+                                SUM(fieldersChoice) AS fieldersChoice,
+                                SUM(forceOuts) AS forceOuts,
+                                SUM(lineOuts) AS lineOuts,
+                                SUM(passedBalls) AS passedBalls,
+                                SUM(popOuts) AS popOuts,
+                                SUM(wildPitches) AS wildPitches,
+                                -- These metrics come from the pitches table
+                                SUM(balls) AS balls,
+                                SUM(ballsPitchOut) AS ballsPitchOut,
+                                SUM(ballsInDirt) AS ballsInDirt,
+                                SUM(intentBalls) AS intentBalls,
+                                SUM(fouls) AS fouls,
+                                SUM(foulBunts) AS foulBunts,
+                                SUM(foulTips) AS foulTips,
+                                SUM(foulPitchOuts) AS foulPitchOuts,
+                                SUM(hitIntoPlay) AS hitIntoPlay,
+                                SUM(pitches) AS pitches,
+                                SUM(pitchOuts) AS pitchOuts,
+                                SUM(strikes) AS strikes,
+                                SUM(strikesCalled) AS strikesCalled,
+                                SUM(strikesPitchOuts) AS strikesPitchOuts,
+                                SUM(missedBunts) AS missedBunts,
+                                SUM(swingAndMissStrikes) AS swingAndMissStrikes,
+                                SUM(swingsPitchOuts) AS swingsPitchOuts,
+                                SUM(swings) AS swings,
+                                -- Swings Per Ball and Strikes
+                                -- 0 Ball(s)
+                                SUM(swingsZeroAndZero) AS swingsZeroAndZero,
+                                SUM(swingsZeroAndOne) AS swingsZeroAndOne,
+                                SUM(swingsZeroAndTwo) AS swingsZeroAndTwo,
+                                -- 1 Ball(s)
+                                SUM(swingsOneAndZero) AS swingsOneAndZero,
+                                SUM(swingsOneAndOne) AS swingsOneAndOne,
+                                SUM(swingsOneAndTwo) AS swingsOneAndTwo,
+                                -- 2 Ball(s)
+                                SUM(swingsTwoAndZero) AS swingsTwoAndZero,
+                                SUM(swingsTwoAndOne) AS swingsTwoAndOne,
+                                SUM(swingsTwoAndTwo) AS swingsTwoAndTwo,
+                                -- 3 Ball(s)
+                                SUM(swingsThreeAndZero) AS swingsThreeAndZero,
+                                SUM(swingsThreeAndOne) AS swingsThreeAndOne,
+                                SUM(swingsThreeAndTwo) AS swingsThreeAndTwo,
+                                -- Trajectories
+                                SUM(flyBalls) AS flyBalls,
+                                SUM(groundBalls) AS groundBalls,
+                                SUM(lineDrives) AS lineDrives,
+                                SUM(popUps) AS popUps,
+                                SUM(groundBunts) AS groundBunts,
+                                SUM(popupBunts) AS popupBunts,
+                                SUM(lineDriveBunts) AS lineDriveBunts
+                            FROM game_player_split_stats
+                            GROUP BY 1, 2
                             )
                             SELECT ', p_grouping_fields, ',',
                             '   SUM(airOuts) airOuts,
                                 SUM(atBats) atBats,
-                                SUM(balls) balls,
                                 SUM(walks) walks,
                                 SUM(battersFaced) battersFaced,
                                 SUM(blownSaves) blownSaves,
-                                SUM(catchersInterference) catchersInterference,
+                                SUM(catchersInterference) AS catcherInterferences,
                                 SUM(caughtStealing) caughtStealing,
                                 SUM(completeGames) completeGames,
                                 SUM(doubles) doubles,
@@ -98,17 +195,62 @@ SET @insert_stmt = CONCAT('INSERT INTO agg_pitching_stats (', p_grouping_fields,
                                 SUM(shutouts) shutouts,
                                 SUM(stolenBases) stolenBases,
                                 SUM(strikeOuts) strikeOuts,
-                                SUM(strikes) strikes,
-                                SUM(singles) + SUM(doubles)*2 + SUM(triples)*3 + SUM(homeRuns)*4 totalBases,
                                 SUM(triples) triples,
                                 SUM(unintentionalWalks) unintentionalWalks,
-                                SUM(wildPitches) wildPitches,
+                                SUM(ss.wildPitches) wildPitches,
                                 SUM(wins) wins,
+                                -- These metrics come from the pitches table
+                                SUM(ss.balls) AS balls,
+                                SUM(ballsPitchOut) AS ballsPitchOut,
+                                SUM(ballsInDirt) AS ballsInDirt,
+                                SUM(intentBalls) AS intentBalls,
+                                SUM(fouls) AS fouls,
+                                SUM(foulBunts) AS foulBunts,
+                                SUM(foulTips) AS foulTips,
+                                SUM(foulPitchOuts) AS foulPitchOuts,
+                                SUM(hitIntoPlay) AS hitIntoPlay,
+                                SUM(pitches) AS pitches,
+                                SUM(pitchOuts) AS pitchOuts,
+                                SUM(ss.strikes) AS strikes,
+                                SUM(strikesCalled) AS strikesCalled,
+                                SUM(strikesPitchOuts) AS strikesPitchOuts,
+                                SUM(missedBunts) AS missedBunts,
+                                SUM(swingAndMissStrikes) AS swingAndMissStrikes,
+                                SUM(swingsPitchOuts) AS swingsPitchOuts,
+                                SUM(swings) AS swings,
+                                -- Swings Per Ball and Strikes
+                                -- 0 Ball(s)
+                                SUM(swingsZeroAndZero) AS swingsZeroAndZero,
+                                SUM(swingsZeroAndOne) AS swingsZeroAndOne,
+                                SUM(swingsZeroAndTwo) AS swingsZeroAndTwo,
+                                -- 1 Ball(s)
+                                SUM(swingsOneAndZero) AS swingsOneAndZero,
+                                SUM(swingsOneAndOne) AS swingsOneAndOne,
+                                SUM(swingsOneAndTwo) AS swingsOneAndTwo,
+                                -- 2 Ball(s)
+                                SUM(swingsTwoAndZero) AS swingsTwoAndZero,
+                                SUM(swingsTwoAndOne) AS swingsTwoAndOne,
+                                SUM(swingsTwoAndTwo) AS swingsTwoAndTwo,
+                                -- 3 Ball(s)
+                                SUM(swingsThreeAndZero) AS swingsThreeAndZero,
+                                SUM(swingsThreeAndOne) AS swingsThreeAndOne,
+                                SUM(swingsThreeAndTwo) AS swingsThreeAndTwo,
+                                -- Trajectories
+                                SUM(flyBalls) AS flyBalls,
+                                SUM(groundBalls) AS groundBalls,
+                                SUM(lineDrives) AS lineDrives,
+                                SUM(popUps) AS popUps,
+                                SUM(groundBunts) AS groundBunts,
+                                SUM(popupBunts) AS popupBunts,
+                                SUM(lineDriveBunts) AS lineDriveBunts,
                                 agg_grouping_id("', p_grouping_fields, '") grouping_id,
                                 agg_grouping_description("', p_grouping_fields, '") grouping_description
                             FROM games g
                             INNER JOIN game_player_pitching_stats bs
                                 ON g.gamePk = bs.gamePk
+                            INNER JOIN game_split_stats ss
+                                ON bs.gamePk = ss.gamePk
+                                AND bs.playerId = ss.pitcherId
                             WHERE gameType2 IN ("PS","RS")
                             GROUP BY ',
                                 p_grouping_fields
@@ -117,32 +259,6 @@ SET @insert_stmt = CONCAT('INSERT INTO agg_pitching_stats (', p_grouping_fields,
 SELECT @insert_stmt;
 PREPARE insert_stmt_sql FROM @insert_stmt;
 EXECUTE insert_stmt_sql;
-
-UPDATE
-  agg_pitching_stats
-  SET
-    strikeOutsPerNineInnings = IF(outs > 0, strikeouts * 27 / outs, NULL)
-  , walksPerNineInnings = IF(outs > 0, walks * 27 / outs, NULL)
-  , homeRunsPerNineInnings = IF(outs > 0, homeRuns * 27 / outs, NULL)
-  , runsPerNineInnings = IF(outs > 0, runs * 27 / outs, NULL)
-  , earnedRunsPerNineInnings = IF(outs > 0, earnedRuns * 27 / outs, NULL)
-  , walksHitsPerInning = IF(outs > 0, (hits + walks) * 3 / outs, NULL)
-  , fieldIndepedentPitching =  IF(outs > 0, (13 * homeRuns + 3 * (walks + hitBatsmen) - 2 * strikeOuts) * 3 / outs, NULL )
-  , strikeOutPerBattersFaced = IF(battersFaced > 0, strikeOuts / battersFaced, NULL)
-  , baseOnBallsPerBattersFaced = IF(battersFaced > 0, walks / battersFaced, NULL)
-  , strikeOutsWalksPercentage = IF(battersFaced > 0, (strikeOuts - walks) / battersFaced, NULL)
-  , strikeOutsPerWalksPercentage = IF(walks > 0, strikeOuts / walks, NULL)
-  , leftOnBasePercentage = IF(hits + walks + hitBatsmen - 1.4 * homeRuns > 0, (hits + walks + hitBatsmen - runs) / (hits + walks + hitBatsmen - 1.4 * homeRuns), NULL)
-  , opponentsBattingAverage = IF(atbats > 0, hits / atBats, NULL)
-  , battedBallsInPlayPercentage = IF(atBats - strikeOuts - homeRuns - sacFlies > 0, (singles + doubles + triples) / (atBats - strikeOuts - homeRuns - sacFlies), NULL)
-  , sluggingPercentage = IF(atBats > 0, totalBases / atBats, NULL)
-  , stolenBasePercentage = IF(caughtStealing + stolenBases > 0, stolenBases / (caughtStealing + stolenBases), NULL)
-  , onBasePercentage = IF(plateAppearances > 0, (hits + walks + hitBatsmen) / plateAppearances, NULL)
-  , onBasePlusSluggingPercentage = IF(plateAppearances > 0, (hits + walks + hitBatsmen) / plateAppearances, 0) + IF(atbats > 0, totalBases / atBats, 0)
-  , isolatedPower = IF(atBats > 0, (doubles + 2 * triples + 3 * homeRuns) / atBats, NULL)
-  , savePercentage = IF(saveOpportunities > 0, saves / saveOpportunities, NULL)
-  , winPercentage = IF (wins + losses > 0, wins / (wins + losses), NULL)
-WHERE groupingId = agg_grouping_id(p_grouping_fields);
 
 COMMIT;
 

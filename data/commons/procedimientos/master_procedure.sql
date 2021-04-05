@@ -30,7 +30,6 @@ CALL game_player_fielding_outs();
 CALL game_battery_fielding_stats();
 CALL game_player_split_stats();
 
-
 -- Run Expectancy
 CALL rem_play_by_play();
 CALL rem_run_expectancy_matrix();
@@ -76,7 +75,7 @@ CALL agg_batting_split_stats( 'majorLeagueId,seasonId,gameType2,teamId,batSide,p
 CALL agg_batting_split_stats( 'majorLeagueId,seasonId,gameType2,venueId,teamId,teamType,batSide', @insert_stmt );
 CALL agg_batting_split_stats( 'majorLeagueId,seasonId,gameType2,venueId,teamId,teamType,pitchHand', @insert_stmt );
 
--- Derived metrics
+-- Derived Batting metrics
 CALL agg_batting_derived_metrics();
 CALL woba();
 CALL wraa();
@@ -90,6 +89,25 @@ CALL agg_pitching_stats( 'majorLeagueId,seasonId,gameType2,teamId', @insert_stmt
 CALL agg_pitching_stats( 'majorLeagueId,seasonId,gameType2,teamId,playerId', @insert_stmt );
 CALL agg_pitching_stats( 'majorLeagueId,seasonId,gameType2,venueId,teamId,teamType', @insert_stmt );
 CALL agg_pitching_stats( 'majorLeagueId,seasonId,gameType2,teamId,teamType', @insert_stmt );
+
+-- Aggregated Pitching Split Stats
+CALL agg_pitching_split_stats( 'majorLeagueId,seasonId,gameType2,batSide', @insert_stmt );
+CALL agg_pitching_split_stats( 'majorLeagueId,seasonId,gameType2,pitchHand', @insert_stmt );
+CALL agg_pitching_split_stats( 'majorLeagueId,seasonId,gameType2,menOnBase', @insert_stmt );
+CALL agg_pitching_split_stats( 'majorLeagueId,seasonId,gameType2,playerId,batSide', @insert_stmt );
+CALL agg_pitching_split_stats( 'majorLeagueId,seasonId,gameType2,playerId,pitchHand', @insert_stmt );
+CALL agg_pitching_split_stats( 'majorLeagueId,seasonId,gameType2,playerId,menOnBase', @insert_stmt );
+CALL agg_pitching_split_stats( 'majorLeagueId,seasonId,gameType2,teamId,batSide', @insert_stmt );
+CALL agg_pitching_split_stats( 'majorLeagueId,seasonId,gameType2,teamId,pitchHand', @insert_stmt );
+CALL agg_pitching_split_stats( 'majorLeagueId,seasonId,gameType2,teamId,menOnBase', @insert_stmt );
+CALL agg_pitching_split_stats( 'majorLeagueId,seasonId,gameType2,teamId,playerId,batSide', @insert_stmt );
+CALL agg_pitching_split_stats( 'majorLeagueId,seasonId,gameType2,teamId,playerId,pitchHand', @insert_stmt );
+CALL agg_pitching_split_stats( 'majorLeagueId,seasonId,gameType2,teamId,batSide,pitchHand', @insert_stmt );
+CALL agg_pitching_split_stats( 'majorLeagueId,seasonId,gameType2,venueId,teamId,teamType,batSide', @insert_stmt );
+CALL agg_pitching_split_stats( 'majorLeagueId,seasonId,gameType2,venueId,teamId,teamType,pitchHand', @insert_stmt );
+
+-- Derived Pitching Metrics
+CALL agg_pitching_derived_metrics();
 
 -- Aggregated Fielding Stats
 CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2', @insert_stmt );
