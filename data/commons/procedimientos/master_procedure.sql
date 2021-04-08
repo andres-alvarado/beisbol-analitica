@@ -35,9 +35,6 @@ CALL rem_play_by_play();
 CALL rem_run_expectancy_matrix();
 CALL rem_event_run_value();
 
--- Park Factors
-CALL pf_park_factors();
-
 -- Win Expectancy
 CALL we_win_expectancy();
 
@@ -116,6 +113,9 @@ CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2,teamId', @insert_stmt
 CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2,teamId,positionAbbrev,playerId', @insert_stmt );
 CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2,venueId,teamId,teamType', @insert_stmt );
 CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2,teamId,teamType', @insert_stmt );
+
+-- Park Factors
+CALL pf_park_factors();
 
 -- Clean Staging Tables
 CALL clean_staging_tables();
