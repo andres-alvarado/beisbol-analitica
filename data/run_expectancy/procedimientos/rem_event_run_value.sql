@@ -103,6 +103,46 @@ rem_play_by_play_events AS (
         'Pickoff 2B',
         'Pickoff 3B'
       )
+
+  UNION ALL
+
+  SELECT
+    majorLeagueId,
+    seasonId,
+    runnersBeforePlay,
+    runsScoredBeforePlay,
+    outsBeforePlay,
+    runsScoredInPlay,
+    outsAfterPlay,
+    runnersAfterPlay,
+    runsScoredEndInning,
+    'Ball in Play' AS event
+  FROM rem_play_by_play
+  WHERE event IN (
+        'Field Error',
+        'Field Out',
+        'Flyout',
+        'Forceout',
+        'Groundout',
+        'Fielders Choice Out',
+        'Lineout',
+        'Pop Out',
+        'Sac Bunt Double Play',
+        'Sac Bunt',
+        'Bunt Groundout',
+        'Bunt Lineout',
+        'Bunt Pop Out',
+        'Sac Fly Double Play',
+        'Sac Fly',
+        'Single',
+        'Double',
+        'Triple',
+        'Grounded Into DP',
+        'Runner Double Play',
+        'Double Play',
+        'Field Out',
+        'Fielders Choice'
+      )
 ),
 /* Calcular run expectancies al inicio, durante y final de jugada */
 run_expectancies AS (

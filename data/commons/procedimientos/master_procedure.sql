@@ -55,6 +55,9 @@ CALL agg_batting_stats( 'majorLeagueId,seasonId,gameType2,teamId', @insert_stmt 
 CALL agg_batting_stats( 'majorLeagueId,seasonId,gameType2,teamId,playerId', @insert_stmt );
 CALL agg_batting_stats( 'majorLeagueId,seasonId,gameType2,venueId,teamId,teamType', @insert_stmt );
 CALL agg_batting_stats( 'majorLeagueId,seasonId,gameType2,teamId,teamType', @insert_stmt );
+CALL agg_batting_stats( 'majorLeagueId,seasonId,gameType2,venueId', @insert_stmt );
+CALL agg_batting_stats( 'majorLeagueId,seasonId,gameType2,venueId,teamType', @insert_stmt );
+
 
 -- Aggregated Batting Split Stats
 CALL agg_batting_split_stats( 'majorLeagueId,seasonId,gameType2,batSide', @insert_stmt );
