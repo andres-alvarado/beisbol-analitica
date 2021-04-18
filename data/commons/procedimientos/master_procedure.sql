@@ -108,6 +108,7 @@ CALL agg_pitching_split_stats( 'majorLeagueId,seasonId,gameType2,venueId,teamId,
 
 -- Derived Pitching Metrics
 CALL agg_pitching_derived_metrics();
+CALL fip();
 
 -- Aggregated Fielding Stats
 CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2', @insert_stmt );
