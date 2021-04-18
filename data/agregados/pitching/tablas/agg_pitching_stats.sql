@@ -65,7 +65,6 @@ CREATE TABLE agg_pitching_stats (
   runsPerNineInnings DOUBLE,
   earnedRunsPerNineInnings DOUBLE,
   walksHitsPerInning DOUBLE,
-  fieldIndepedentPitching DOUBLE,
   strikeOutPerBattersFaced DOUBLE,
   baseOnBallsPerBattersFaced DOUBLE,
   strikeOutsWalksPercentage DOUBLE,
@@ -80,6 +79,23 @@ CREATE TABLE agg_pitching_stats (
   isolatedPower DOUBLE,
   savePercentage DOUBLE,
   winPercentage DOUBLE,
+  inningsPitched DOUBLE,
+  -- FIP
+  -- wOBA weights
+  weightBallInPlay DOUBLE,
+  weightHitByPitch DOUBLE,
+  weightHomeRun DOUBLE,
+  weightStrikeout DOUBLE,
+  weightWalk DOUBLE,
+  fipLeagueRunsPerTeamPerGame INTEGER,
+  fipLeaguePlateAppearancesPerTeamPerGame INTEGER,
+  fipLeagueRunsPerPlateAppearancePerTeamPerGame DOUBLE,
+  -- FIP weights
+  fipWeightStrikeOut DOUBLE,
+  fipWeightWalk DOUBLE,
+  fipWeightHomeRun DOUBLE,
+  fipConstant DOUBLE,
+  fieldIndepedentPitching DOUBLE,
   -- These come from the pitches table
   -- These metrics come from the pitches table
   balls INTEGER,

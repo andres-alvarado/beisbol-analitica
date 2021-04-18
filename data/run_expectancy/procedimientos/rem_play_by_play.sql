@@ -434,6 +434,33 @@ AND pbp.event = r.event
 SET pbp.runnerId = r.runnerId
 ,   pbp.responsiblePitcherId = r.responsiblePitcherId;
 
+/*  Es aparicion al plato? */
+UPDATE rem_play_by_play
+SET isPlateAppearance = event NOT IN (
+  'Balk',
+  'Caught Stealing 2B',
+  'Caught Stealing 3B',
+  'Caught Stealing Home',
+  'Other Advance',
+  'Passed Ball',
+  'Pickoff 1B',
+  'Pickoff 2B',
+  'Pickoff 3B',
+  'Pickoff Caught Stealing 2B',
+  'Pickoff Caught Stealing 3B',
+  'Pickoff Caught Stealing Home',
+  'Pickoff Error 1B',
+  'Pickoff Error 2B',
+  'Pickoff Error 3B',
+  'Runner Double Play',
+  'Runner Interference',
+  'Runner Out',
+  'Stolen Base 2B',
+  'Stolen Base 3B',
+  'Stolen Base Home',
+  'Wild Pitch'
+);
+
 COMMIT;
 
 END //

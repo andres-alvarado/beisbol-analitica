@@ -38,7 +38,8 @@ CREATE TABLE IF NOT EXISTS rem_play_by_play (
   battingTeamScore INTEGER,
   pitchingTeamScore INTEGER,
   battingTeamScoreEndGame INTEGER,
-  pitchingTeamScoreEndGame INTEGER
+  pitchingTeamScoreEndGame INTEGER,
+  isPlateAppearance BOOLEAN
 );
 
 ALTER TABLE rem_play_by_play ADD INDEX(gamePk, atBatIndex, playIndex);
