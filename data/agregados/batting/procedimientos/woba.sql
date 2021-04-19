@@ -64,7 +64,7 @@ UPDATE
                                 homeRuns * ( weightHomeRun + ABS(weightOut) )
                               ) / (atBats + unintentionalWalks + sacFlies + hitByPitch),
                               NULL
-                            ),
+                            )
   WHERE groupingDescription IN( 'MAJORLEAGUEID_SEASONID_GAMETYPE2',
                                 'MAJORLEAGUEID_SEASONID_GAMETYPE2_PLAYERID'
                               );

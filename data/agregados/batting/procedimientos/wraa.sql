@@ -18,6 +18,7 @@ INNER JOIN (
   FROM agg_batting_stats
   WHERE
     groupingDescription = 'MAJORLEAGUEID_SEASONID_GAMETYPE2'
+    AND gameType2 = 'RS'
 ) w
   ON abs.majorLeagueId = w.majorLeagueId
   AND abs.seasonId = w.seasonId
