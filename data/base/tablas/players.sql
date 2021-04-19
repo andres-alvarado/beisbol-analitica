@@ -6,6 +6,7 @@ CREATE TABLE players (
   playerId INTEGER,
   firstName VARCHAR(100),
   lastName VARCHAR(100),
+  fullName VARCHAR(200),
   birthDate VARCHAR(100),
   birthCity VARCHAR(100),
   birthStateProvince VARCHAR(100),

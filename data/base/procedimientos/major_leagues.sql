@@ -12,10 +12,10 @@ INSERT INTO major_leagues(
     majorLeague
 )
 SELECT DISTINCT majorLeagueId, majorLeague
-FROM stg_game_context
-WHERE majorLeagueId NOT  IN (
+FROM games
+WHERE majorLeagueId NOT IN (
     SELECT majorLeagueId
-    FROM games
+    FROM major_leagues
 );
 
 COMMIT;
