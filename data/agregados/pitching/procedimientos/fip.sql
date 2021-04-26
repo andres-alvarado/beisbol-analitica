@@ -173,11 +173,10 @@ INNER JOIN (
       fipWeightStrikeOut,
       fipWeightUnintentionalWalk,
       fipWeightHomeRun,
-      leagueEarnedRunsPerNineInnings - (
-        fipWeightHomeRun * leagueHomeRuns + fipWeightUnintentionalWalk * (
-          leagueUnintentionalWalks + leagueHitBatsmen
-        ) + fipWeightStrikeOut * leagueStrikeOuts
-      ) / leagueInningsPitched fipConstant
+      leagueEarnedRunsPerNineInnings - ( fipWeightHomeRun * leagueHomeRuns +
+                                         fipWeightUnintentionalWalk * ( leagueUnintentionalWalks + leagueHitBatsmen) +
+                                        fipWeightStrikeOut * leagueStrikeOuts
+                                       ) / leagueInningsPitched fipConstant
     FROM fip_weights
   ) AS fp
   ON aps.majorLeagueId = fp.majorLeagueId
@@ -193,7 +192,12 @@ INNER JOIN (
 /* FIP */
 UPDATE
   agg_pitching_stats
-  SET fieldIndepedentPitching = IF( inningsPitched > 0, ( fipWeightHomeRun * homeRuns + fipWeightUnintentionalWalk * ( walks + hitBatsmen ) + fipWeightStrikeOut * strikeOuts ) / inningsPitched  + fipConstant, NULL )
+  SET fieldIndepedentPitching = IF( inningsPitched > 0, ( fipWeightHomeRun * homeRuns +
+                                                          fipWeightUnintentionalWalk * ( walks + hitBatsmen ) +
+                                                          fipWeightStrikeOut * strikeOuts
+                                                        ) / inningsPitched  + fipConstant
+                                  , NULL
+                                  )
   WHERE groupingDescription = 'MAJORLEAGUEID_SEASONID_GAMETYPE2_PLAYERID';
 
 COMMIT;
