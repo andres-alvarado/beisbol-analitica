@@ -13,11 +13,14 @@ INSERT INTO game_batting_orders(
     playerId,
     battingOrder
   )
-SELECT
+SELECT DISTINCT
   gamePk,
   teamId,
   playerId,
-  battingOrder
+  /* Data issue, MLB */
+  CASE WHEN gamePk = 237178 AND teamId = 2291 AND playerId =  534721 THEN 2
+  ELSE battingOrder
+  END battingOrder
 FROM stg_box_team_batting_order
 WHERE
   gamePk NOT IN (
