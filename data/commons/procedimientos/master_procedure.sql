@@ -7,8 +7,8 @@ DELIMITER //
 CREATE PROCEDURE master_procedure()
 BEGIN
 
+
 -- Base
-CALL major_leagues();
 CALL game_batting_orders();
 CALL games();
 CALL players();
@@ -29,6 +29,8 @@ CALL defensive_substitutions();
 CALL game_player_fielding_outs();
 CALL game_battery_fielding_stats();
 CALL game_player_split_stats();
+CALL major_leagues();
+
 
 -- Run Expectancy
 CALL rem_play_by_play();

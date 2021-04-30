@@ -271,6 +271,7 @@ INNER JOIN home_allowed ha
   ON hs.seasonId = ha.seasonId
   AND hs.majorLeagueId = ha.majorLeagueId
   AND hs.teamId = ha.teamId
+  AND hs.venueId = ha.venueId
 INNER JOIN away_allowed aa
   ON ha.seasonId = aa.seasonId
   AND ha.majorLeagueId = aa.majorLeagueId
