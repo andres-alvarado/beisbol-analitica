@@ -186,7 +186,12 @@ CREATE TABLE agg_pitching_stats (
   -- 3 Ball(s)
   threeAndZeroSwingPercentage DOUBLE,
   threeAndOneSwingPercentage DOUBLE,
-  threeAndTwoSwingPercentage DOUBLE
+  threeAndTwoSwingPercentage DOUBLE,
+  -- Atributos
+  majorLeague VARCHAR(10),
+  playerName VARCHAR(100),
+  teamName VARCHAR(100),
+  venueName VARCHAR(100)
 );
 
 ALTER TABLE agg_pitching_stats ADD INDEX(groupingId);

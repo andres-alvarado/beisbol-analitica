@@ -156,7 +156,12 @@ CREATE TABLE agg_batting_stats (
   -- 3 Ball(s)
   threeAndZeroSwingPercentage DOUBLE,
   threeAndOneSwingPercentage DOUBLE,
-  threeAndTwoSwingPercentage DOUBLE
+  threeAndTwoSwingPercentage DOUBLE,
+  -- Atributos
+  majorLeague VARCHAR(10),
+  playerName VARCHAR(100),
+  teamName VARCHAR(100),
+  venueName VARCHAR(100)
 ) ENGINE = INNODB;
 
 ALTER TABLE agg_batting_stats ADD INDEX(groupingId);

@@ -58,7 +58,10 @@ CREATE TABLE pf_park_factors (
   unintentionalWalksParkFactor DOUBLE,
   flyBallsParkFactor DOUBLE,
   groundBallsParkFactor DOUBLE,
-  lineDrivesParkFactor DOUBLE
+  lineDrivesParkFactor DOUBLE,
+  -- Atributos
+  majorLeague VARCHAR(10),
+  venueName VARCHAR(100)
 );
 
 ALTER TABLE pf_park_factors ADD INDEX(groupingId);

@@ -22,7 +22,12 @@ CREATE TABLE agg_fielding_stats (
   gamesPlayed DOUBLE,
   fieldingPercentage DOUBLE,
   rangeFactorPerInning DOUBLE,
-  rangeFactorPerGame DOUBLE
+  rangeFactorPerGame DOUBLE,
+  -- Atributos
+  majorLeague VARCHAR(10),
+  playerName VARCHAR(100),
+  teamName VARCHAR(100),
+  venueName VARCHAR(100)
 );
 
 ALTER TABLE agg_fielding_stats ADD INDEX(groupingId);

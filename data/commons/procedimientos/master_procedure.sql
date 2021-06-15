@@ -60,7 +60,6 @@ CALL agg_batting_stats( 'majorLeagueId,seasonId,gameType2,teamId,teamType', @ins
 CALL agg_batting_stats( 'majorLeagueId,seasonId,gameType2,venueId', @insert_stmt );
 CALL agg_batting_stats( 'majorLeagueId,seasonId,gameType2,venueId,teamType', @insert_stmt );
 
-
 -- Aggregated Batting Split Stats
 CALL agg_batting_split_stats( 'majorLeagueId,seasonId,gameType2,batSide', @insert_stmt );
 CALL agg_batting_split_stats( 'majorLeagueId,seasonId,gameType2,pitchHand', @insert_stmt );
@@ -123,8 +122,16 @@ CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2,teamId,teamType', @in
 -- Park Factors
 CALL pf_park_factors();
 
+-- Update attributes on Agg Tables
+CALL update_table_attributes('agg_batting_stats', @update_stmt);
+CALL update_table_attributes('agg_pitching_stats', @update_stmt);
+CALL update_table_attributes('agg_fielding_stats', @update_stmt);
+CALL update_table_attributes('pf_park_factors', @update_stmt);
+
 -- Clean Staging Tables
 CALL clean_staging_tables();
+
+
 
 END //
 
