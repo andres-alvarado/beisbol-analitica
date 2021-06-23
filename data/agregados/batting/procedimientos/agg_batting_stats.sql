@@ -4,12 +4,16 @@ DROP PROCEDURE agg_batting_stats;
 
 DELIMITER //
 
-CREATE PROCEDURE agg_batting_stats( IN p_grouping_fields VARCHAR(255), OUT insert_stmt VARCHAR(16000))
+CREATE PROCEDURE agg_batting_stats( IN p_grouping_fields VARCHAR(255), IN p_order_by_field VARCHAR(255),
+                                    IN p_table_name VARCHAR(255), OUT insert_stmt VARCHAR(16000)
+                                  )
 BEGIN
 
 /* Para probar este procedimiento hacer: CALL agg_batting_stats( 'majorLeagueId', @insert_stmt);  */
 
-SET @insert_stmt = CONCAT('INSERT INTO agg_batting_stats (', p_grouping_fields,',',
+SET @insert_stmt = CONCAT('INSERT INTO ', p_table_name, '(',
+                            IF( p_table_name = 'cum_batting_stats', CONCAT(p_order_by_field,','),''),
+                            p_grouping_fields,',',
                           ' atBats,
                             balks,
                             batterInterferences,
@@ -147,8 +151,11 @@ SET @insert_stmt = CONCAT('INSERT INTO agg_batting_stats (', p_grouping_fields,'
                                 SUM(lineDriveBunts) AS lineDriveBunts
                             FROM game_player_split_stats
                             GROUP BY 1, 2
-                            )
-                            SELECT ', p_grouping_fields, ',',
+                            ), d AS
+                            (
+                            SELECT ',
+                                IF( p_table_name = 'cum_batting_stats', CONCAT(p_order_by_field,','),''),
+                                p_grouping_fields, ',',
                             '   SUM(atBats) AS atBats,
                                 SUM(balks) AS balks,
                                 SUM(batterInterferences) AS batterInterferences,
@@ -226,9 +233,7 @@ SET @insert_stmt = CONCAT('INSERT INTO agg_batting_stats (', p_grouping_fields,'
                                 SUM(popUps) AS popUps,
                                 SUM(groundBunts) AS groundBunts,
                                 SUM(popupBunts) AS popupBunts,
-                                SUM(lineDriveBunts) AS lineDriveBunts,
-                                agg_grouping_id("', p_grouping_fields, '") groupingId,
-                                agg_grouping_description("', p_grouping_fields, '") groupingDescription
+                                SUM(lineDriveBunts) AS lineDriveBunts
                             FROM games g
                             INNER JOIN game_player_batting_stats bs
                                 ON g.gamePk = bs.gamePk
@@ -237,6 +242,95 @@ SET @insert_stmt = CONCAT('INSERT INTO agg_batting_stats (', p_grouping_fields,'
                                 AND bs.playerId = ss.batterId
                             WHERE gameType2 IN ("PS","RS")
                             GROUP BY ',
+                                IF( p_table_name = 'cum_batting_stats', CONCAT(p_order_by_field,','),''),
+                                p_grouping_fields,
+                            ')',
+                            'SELECT ',
+                                IF( p_table_name = 'cum_batting_stats', CONCAT(p_order_by_field,','),''),
+                                p_grouping_fields, ',',
+                                AGG_OR_CUM_QUERIES('SUM(atBats)', p_grouping_fields, p_order_by_field ),' AS atBats,',
+                                AGG_OR_CUM_QUERIES('SUM(balks)', p_grouping_fields, p_order_by_field ),' AS balks,',
+                                AGG_OR_CUM_QUERIES('SUM(batterInterferences)', p_grouping_fields, p_order_by_field ),' AS batterInterferences,',
+                                AGG_OR_CUM_QUERIES('SUM(bunts)', p_grouping_fields, p_order_by_field ),' AS bunts,',
+                                AGG_OR_CUM_QUERIES('SUM(catcherInterferences)', p_grouping_fields, p_order_by_field ),' AS catcherInterferences,',
+                                AGG_OR_CUM_QUERIES('SUM(caughtStealing)', p_grouping_fields, p_order_by_field ),' AS caughtStealing,',
+                                AGG_OR_CUM_QUERIES('SUM(doubles)', p_grouping_fields, p_order_by_field ),' AS doubles,',
+                                AGG_OR_CUM_QUERIES('SUM(fanInterferences)', p_grouping_fields, p_order_by_field ),' AS fanInterferences,',
+                                AGG_OR_CUM_QUERIES('SUM(fieldErrors)', p_grouping_fields, p_order_by_field ),' AS fieldErrors,',
+                                AGG_OR_CUM_QUERIES('SUM(fieldersChoice)', p_grouping_fields, p_order_by_field ),' AS fieldersChoice,',
+                                AGG_OR_CUM_QUERIES('SUM(flyOuts)', p_grouping_fields, p_order_by_field ),' AS flyOuts,',
+                                AGG_OR_CUM_QUERIES('SUM(forceOuts)', p_grouping_fields, p_order_by_field ),' AS forceOuts,',
+                                AGG_OR_CUM_QUERIES('SUM(games)', p_grouping_fields, p_order_by_field ),' AS games,',
+                                AGG_OR_CUM_QUERIES('SUM(groundedIntoDoublePlays)', p_grouping_fields, p_order_by_field ),' AS groundedIntoDoublePlays,',
+                                AGG_OR_CUM_QUERIES('SUM(groundedIntoTriplePlays)', p_grouping_fields, p_order_by_field ),' AS groundedIntoTriplePlays,',
+                                AGG_OR_CUM_QUERIES('SUM(groundOuts)', p_grouping_fields, p_order_by_field ),' AS groundOuts,',
+                                AGG_OR_CUM_QUERIES('SUM(hitByPitch)', p_grouping_fields, p_order_by_field ),' AS hitByPitch,',
+                                AGG_OR_CUM_QUERIES('SUM(hits)', p_grouping_fields, p_order_by_field ),' AS hits,',
+                                AGG_OR_CUM_QUERIES('SUM(homeRuns)', p_grouping_fields, p_order_by_field ),' AS homeRuns,',
+                                AGG_OR_CUM_QUERIES('SUM(intentionalWalks)', p_grouping_fields, p_order_by_field ),' AS intentionalWalks,',
+                                AGG_OR_CUM_QUERIES('SUM(leftOnBase)', p_grouping_fields, p_order_by_field ),' AS leftOnBase,',
+                                AGG_OR_CUM_QUERIES('SUM(lineOuts)', p_grouping_fields, p_order_by_field ),' AS lineOuts,',
+                                AGG_OR_CUM_QUERIES('SUM(passedBalls)', p_grouping_fields, p_order_by_field ),' AS passedBalls,',
+                                AGG_OR_CUM_QUERIES('SUM(pickoffs)', p_grouping_fields, p_order_by_field ),' AS pickoffs,',
+                                AGG_OR_CUM_QUERIES('SUM(popOuts)', p_grouping_fields, p_order_by_field ),' AS popOuts,',
+                                AGG_OR_CUM_QUERIES('SUM(runsBattedIn)', p_grouping_fields, p_order_by_field ),' AS runsBattedIn,',
+                                AGG_OR_CUM_QUERIES('SUM(runs)', p_grouping_fields, p_order_by_field ),' AS runs,',
+                                AGG_OR_CUM_QUERIES('SUM(sacBunts)', p_grouping_fields, p_order_by_field ),' AS sacBunts,',
+                                AGG_OR_CUM_QUERIES('SUM(sacFlies)', p_grouping_fields, p_order_by_field ),' AS sacFlies,',
+                                AGG_OR_CUM_QUERIES('SUM(stolenBases)', p_grouping_fields, p_order_by_field ),' AS stolenBases,',
+                                AGG_OR_CUM_QUERIES('SUM(strikeOuts)', p_grouping_fields, p_order_by_field ),' AS strikeOuts,',
+                                AGG_OR_CUM_QUERIES('SUM(triples)', p_grouping_fields, p_order_by_field ),' AS triples,',
+                                AGG_OR_CUM_QUERIES('SUM(walks)', p_grouping_fields, p_order_by_field ),' AS walks,',
+                                AGG_OR_CUM_QUERIES('SUM(wildPitches)', p_grouping_fields, p_order_by_field ),' AS wildPitches,',
+                                -- These metrics come from the pitches table',
+                                AGG_OR_CUM_QUERIES('SUM(balls)', p_grouping_fields, p_order_by_field ),' AS balls,',
+                                AGG_OR_CUM_QUERIES('SUM(ballsPitchOut)', p_grouping_fields, p_order_by_field ),' AS ballsPitchOut,',
+                                AGG_OR_CUM_QUERIES('SUM(ballsInDirt)', p_grouping_fields, p_order_by_field ),' AS ballsInDirt,',
+                                AGG_OR_CUM_QUERIES('SUM(intentBalls)', p_grouping_fields, p_order_by_field ),' AS intentBalls,',
+                                AGG_OR_CUM_QUERIES('SUM(fouls)', p_grouping_fields, p_order_by_field ),' AS fouls,',
+                                AGG_OR_CUM_QUERIES('SUM(foulBunts)', p_grouping_fields, p_order_by_field ),' AS foulBunts,',
+                                AGG_OR_CUM_QUERIES('SUM(foulTips)', p_grouping_fields, p_order_by_field ),' AS foulTips,',
+                                AGG_OR_CUM_QUERIES('SUM(foulPitchOuts)', p_grouping_fields, p_order_by_field ),' AS foulPitchOuts,',
+                                AGG_OR_CUM_QUERIES('SUM(hitIntoPlay)', p_grouping_fields, p_order_by_field ),' AS hitIntoPlay,',
+                                AGG_OR_CUM_QUERIES('SUM(pitches)', p_grouping_fields, p_order_by_field ),' AS pitches,',
+                                AGG_OR_CUM_QUERIES('SUM(pitchOuts)', p_grouping_fields, p_order_by_field ),' AS pitchOuts,',
+                                AGG_OR_CUM_QUERIES('SUM(strikes)', p_grouping_fields, p_order_by_field ),' AS strikes,',
+                                AGG_OR_CUM_QUERIES('SUM(strikesCalled)', p_grouping_fields, p_order_by_field ),' AS strikesCalled,',
+                                AGG_OR_CUM_QUERIES('SUM(strikesPitchOuts)', p_grouping_fields, p_order_by_field ),' AS strikesPitchOuts,',
+                                AGG_OR_CUM_QUERIES('SUM(missedBunts)', p_grouping_fields, p_order_by_field ),' AS missedBunts,',
+                                AGG_OR_CUM_QUERIES('SUM(swingAndMissStrikes)', p_grouping_fields, p_order_by_field ),' AS swingAndMissStrikes,',
+                                AGG_OR_CUM_QUERIES('SUM(swingsPitchOuts)', p_grouping_fields, p_order_by_field ),' AS swingsPitchOuts,',
+                                AGG_OR_CUM_QUERIES('SUM(swings)', p_grouping_fields, p_order_by_field ),' AS swings,',
+                                -- Swings Per Ball and Strikes',
+                                -- 0 Ball(s)', p_grouping_fields, p_order_by_field ),',
+                                AGG_OR_CUM_QUERIES('SUM(swingsZeroAndZero)', p_grouping_fields, p_order_by_field ),' AS swingsZeroAndZero,',
+                                AGG_OR_CUM_QUERIES('SUM(swingsZeroAndOne)', p_grouping_fields, p_order_by_field ),' AS swingsZeroAndOne,',
+                                AGG_OR_CUM_QUERIES('SUM(swingsZeroAndTwo)', p_grouping_fields, p_order_by_field ),' AS swingsZeroAndTwo,',
+                                -- 1 Ball(s)', p_grouping_fields, p_order_by_field ),',
+                                AGG_OR_CUM_QUERIES('SUM(swingsOneAndZero)', p_grouping_fields, p_order_by_field ),' AS swingsOneAndZero,',
+                                AGG_OR_CUM_QUERIES('SUM(swingsOneAndOne)', p_grouping_fields, p_order_by_field ),' AS swingsOneAndOne,',
+                                AGG_OR_CUM_QUERIES('SUM(swingsOneAndTwo)', p_grouping_fields, p_order_by_field ),' AS swingsOneAndTwo,',
+                                -- 2 Ball(s)', p_grouping_fields, p_order_by_field ),',
+                                AGG_OR_CUM_QUERIES('SUM(swingsTwoAndZero)', p_grouping_fields, p_order_by_field ),' AS swingsTwoAndZero,',
+                                AGG_OR_CUM_QUERIES('SUM(swingsTwoAndOne)', p_grouping_fields, p_order_by_field ),' AS swingsTwoAndOne,',
+                                AGG_OR_CUM_QUERIES('SUM(swingsTwoAndTwo)', p_grouping_fields, p_order_by_field ),' AS swingsTwoAndTwo,',
+                                -- 3 Ball(s)', p_grouping_fields, p_order_by_field ),',
+                                AGG_OR_CUM_QUERIES('SUM(swingsThreeAndZero)', p_grouping_fields, p_order_by_field ),' AS swingsThreeAndZero,',
+                                AGG_OR_CUM_QUERIES('SUM(swingsThreeAndOne)', p_grouping_fields, p_order_by_field ),' AS swingsThreeAndOne,',
+                                AGG_OR_CUM_QUERIES('SUM(swingsThreeAndTwo)', p_grouping_fields, p_order_by_field ),' AS swingsThreeAndTwo,',
+                                -- Trajectories',
+                                AGG_OR_CUM_QUERIES('SUM(flyBalls)', p_grouping_fields, p_order_by_field ),' AS flyBalls,',
+                                AGG_OR_CUM_QUERIES('SUM(groundBalls)', p_grouping_fields, p_order_by_field ),' AS groundBalls,',
+                                AGG_OR_CUM_QUERIES('SUM(lineDrives)', p_grouping_fields, p_order_by_field ),' AS lineDrives,',
+                                AGG_OR_CUM_QUERIES('SUM(popUps)', p_grouping_fields, p_order_by_field ),' AS popUps,',
+                                AGG_OR_CUM_QUERIES('SUM(groundBunts)', p_grouping_fields, p_order_by_field ),' AS groundBunts,',
+                                AGG_OR_CUM_QUERIES('SUM(popupBunts)', p_grouping_fields, p_order_by_field ),' AS popupBunts,',
+                                AGG_OR_CUM_QUERIES('SUM(lineDriveBunts)', p_grouping_fields, p_order_by_field ),' AS lineDriveBunts,',
+                                'agg_grouping_id("', p_grouping_fields, '") groupingId,
+                                agg_grouping_description("', p_grouping_fields, '") groupingDescription
+                                FROM d
+                                GROUP BY ',
+                                IF( p_table_name = 'cum_batting_stats', CONCAT(p_order_by_field,','),''),
                                 p_grouping_fields
                         );
 
