@@ -28,6 +28,7 @@ INNER JOIN (
     SUM(IF(event = 'Home Run', runValue, 0)) weightHomeRun,
     SUM(IF(event = 'Out', runValue, 0)) weightOut
   FROM rem_event_run_value
+  WHERE aggregationType = 'AGGREGATED'
   GROUP BY
     1, 2
 ) w
@@ -44,7 +45,8 @@ INNER JOIN (
   ,   aps.weightOut = w.weightOut
   WHERE groupingDescription IN( 'MAJORLEAGUEID_SEASONID_GAMETYPE2',
                                 'MAJORLEAGUEID_SEASONID_GAMETYPE2_PLAYERID'
-                              );
+                              )
+  AND aggregationType = 'AGGREGATED';
 
 /* Update league stats, to get value for BIP */
 UPDATE
@@ -66,6 +68,8 @@ INNER JOIN (
   FROM agg_pitching_stats
   WHERE
     groupingDescription = 'MAJORLEAGUEID_SEASONID_GAMETYPE2'
+  AND aggregationType = 'AGGREGATED'
+
 ) l
   ON aps.majorLeagueId = l.majorLeagueId
   AND aps.seasonId = l.seasonId
@@ -82,7 +86,8 @@ INNER JOIN (
   ,   aps.leagueInningsPitched = l.leagueInningsPitched
   WHERE groupingDescription IN( 'MAJORLEAGUEID_SEASONID_GAMETYPE2',
                                 'MAJORLEAGUEID_SEASONID_GAMETYPE2_PLAYERID'
-                              );
+                              )
+  AND aggregationType = 'AGGREGATED';
 
 /* Weight Ball In Play */
 UPDATE
@@ -95,7 +100,8 @@ UPDATE
                               ) / leagueAtbats
   WHERE groupingDescription IN( 'MAJORLEAGUEID_SEASONID_GAMETYPE2',
                                 'MAJORLEAGUEID_SEASONID_GAMETYPE2_PLAYERID'
-                              );
+                              )
+  AND aggregationType = 'AGGREGATED';
 
 /* Runs per Plate Appearance */
 UPDATE
@@ -126,7 +132,8 @@ INNER JOIN (
   ,   aps.leagueRunsPerPlateAppearancePerTeamPerGame = rpa.leagueRunsPerTeamPerGame / rpa.leaguePlateAppearancesPerTeamPerGame
   WHERE groupingDescription IN( 'MAJORLEAGUEID_SEASONID_GAMETYPE2',
                                 'MAJORLEAGUEID_SEASONID_GAMETYPE2_PLAYERID'
-                              );
+                              )
+  AND aggregationType = 'AGGREGATED';
 
 /* Get FIP Weights: Add League Runs Per Plate Appearance, then substract the weight of balls in play */
 UPDATE
@@ -151,6 +158,7 @@ INNER JOIN (
       WHERE
         groupingDescription IN('MAJORLEAGUEID_SEASONID_GAMETYPE2')
         AND gameType2 = 'RS'
+        AND aggregationType = 'AGGREGATED'
     ),
       fip_weights AS (
       SELECT
@@ -187,7 +195,8 @@ INNER JOIN (
   ,   aps.fipConstant = fp.fipConstant
   WHERE groupingDescription IN( 'MAJORLEAGUEID_SEASONID_GAMETYPE2',
                                 'MAJORLEAGUEID_SEASONID_GAMETYPE2_PLAYERID'
-                              );
+                              )
+  AND aggregationType = 'AGGREGATED';
 
 /* FIP */
 UPDATE
@@ -198,7 +207,8 @@ UPDATE
                                                         ) / inningsPitched  + fipConstant
                                   , NULL
                                   )
-  WHERE groupingDescription = 'MAJORLEAGUEID_SEASONID_GAMETYPE2_PLAYERID';
+  WHERE groupingDescription = 'MAJORLEAGUEID_SEASONID_GAMETYPE2_PLAYERID'
+  AND aggregationType = 'AGGREGATED';
 
 COMMIT;
 

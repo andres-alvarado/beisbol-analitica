@@ -130,12 +130,25 @@ CALL agg_pitching_derived_metrics();
 CALL fip();
 
 -- Aggregated Fielding Stats
-CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2', @insert_stmt );
-CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2,positionAbbrev,playerId', @insert_stmt );
-CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2,teamId', @insert_stmt );
-CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2,teamId,positionAbbrev,playerId', @insert_stmt );
-CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2,venueId,teamId,teamType', @insert_stmt );
-CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2,teamId,teamType', @insert_stmt );
+CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2', 'AGGREGATED', @insert_stmt );
+CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2,positionAbbrev,playerId', 'AGGREGATED', @insert_stmt );
+CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2,teamId', 'AGGREGATED', @insert_stmt );
+CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2,teamId,positionAbbrev,playerId', 'AGGREGATED', @insert_stmt );
+CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2,venueId,teamId,teamType', 'AGGREGATED', @insert_stmt );
+CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2,teamId,teamType', 'AGGREGATED', @insert_stmt );
+
+-- Cumulative Fielding Stats
+CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2', 'CUMULATIVE', @insert_stmt );
+CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2,positionAbbrev,playerId', 'AGGREGATED', @insert_stmt );
+CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2,teamId', 'AGGREGATED', @insert_stmt );
+CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2,teamId,positionAbbrev,playerId', 'AGGREGATED', @insert_stmt );
+CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2,venueId,teamId,teamType', 'AGGREGATED', @insert_stmt );
+CALL agg_fielding_stats( 'majorLeagueId,seasonId,gameType2,teamId,teamType', 'AGGREGATED', @insert_stmt );
+
+-- Derived Fielding Metrics
+CALL agg_fielding_derived_metrics();
+
+
 
 -- Park Factors
 CALL pf_park_factors();

@@ -4,13 +4,19 @@ DROP PROCEDURE agg_fielding_stats;
 
 DELIMITER //
 
-CREATE PROCEDURE agg_fielding_stats( IN p_grouping_fields VARCHAR(255), OUT insert_stmt VARCHAR(16000))
+CREATE PROCEDURE agg_fielding_stats( IN p_grouping_fields VARCHAR(255),
+                                     IN p_aggregation_type VARCHAR(255),
+                                     OUT insert_stmt VARCHAR(16000)
+                                  )
 BEGIN
 
 /* Para probar este procedimiento hacer: CALL agg_fielding_stats( 'majorLeagueId', @insert_stmt);  */
 
-SET @insert_stmt = CONCAT('INSERT INTO agg_fielding_stats (', p_grouping_fields,',',
-                          ' assists,
+SET @insert_stmt = CONCAT('INSERT INTO agg_fielding_stats (',
+                            IF( p_aggregation_type = 'CUMULATIVE', 'gameDate,',''),
+                            p_grouping_fields,',',
+                          ' aggregationType,
+                            assists,
                             catcherInterferences,
                             errors,
                             games,
@@ -28,6 +34,7 @@ SET @insert_stmt = CONCAT('INSERT INTO agg_fielding_stats (', p_grouping_fields,
                               SELECT
                               majorLeagueId
                             , seasonId
+                            , gameDate
                             , gameType2
                             , venueId
                             , positionAbbrev
@@ -51,8 +58,11 @@ SET @insert_stmt = CONCAT('INSERT INTO agg_fielding_stats (', p_grouping_fields,
                               /* Outs, renombrar variables para agrupaciones */
                               SELECT gamePk outsGamePk, playerId outsPlayerId, positionAbbrev outsPositionAbbrev, outs
                               FROM game_player_fielding_outs
-                            )
-                            SELECT ', p_grouping_fields, ',',
+                            ), d AS
+                            (
+                            SELECT ',
+                            IF( p_aggregation_type = 'CUMULATIVE', 'gameDate,',''),
+                            p_grouping_fields, ',',
                           ' SUM( assists ) assists,
                             SUM( catcherInterferences ) catcherInterferences,
                             SUM( errors ) errors,
@@ -70,6 +80,27 @@ SET @insert_stmt = CONCAT('INSERT INTO agg_fielding_stats (', p_grouping_fields,
                             AND s.playerId = o.outsPlayerId
                             AND s.positionAbbrev = o.outsPositionAbbrev
                             GROUP BY ',
+                                IF( p_aggregation_type = 'CUMULATIVE', 'gameDate,',''),
+                                p_grouping_fields,
+                            ')
+                            SELECT ',
+                            IF( p_aggregation_type = 'CUMULATIVE', 'gameDate,',''),
+                            p_grouping_fields, ',',
+                            IF( p_aggregation_type = 'CUMULATIVE', '"CUMULATIVE",','"AGGREGATED",'),
+                          ' SUM( assists ) assists,
+                            SUM( catcherInterferences ) catcherInterferences,
+                            SUM( errors ) errors,
+                            SUM( games ) games,
+                            SUM( putOuts ) putOuts,
+                            SUM( assists + catcherInterferences + errors + putOuts ) totalChances,
+                            SUM( outsPlayed ) outsPlayed,
+                            SUM( outsPlayed ) / 3 inningsPlayed,
+                            SUM( outsPlayed ) / 27 gamesPlayed,
+                            agg_grouping_id("', p_grouping_fields, '") groupingId,
+                            agg_grouping_description("', p_grouping_fields, '") groupingDescription
+                            FROM d
+                            GROUP BY ',
+                                IF( p_aggregation_type = 'CUMULATIVE', 'gameDate,',''),
                                 p_grouping_fields
                            );
 SELECT @insert_stmt;

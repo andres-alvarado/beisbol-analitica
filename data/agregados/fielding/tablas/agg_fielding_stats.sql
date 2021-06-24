@@ -3,8 +3,10 @@ DROP TABLE agg_fielding_stats;
 CREATE TABLE agg_fielding_stats (
   groupingId INTEGER UNSIGNED,
   groupingDescription VARCHAR(255),
+  aggregationType VARCHAR(20),
   majorLeagueId INTEGER,
   seasonId DOUBLE,
+  gameDate DATE,
   gameType2 VARCHAR(10),
   teamType VARCHAR(10),
   venueId INTEGER,
