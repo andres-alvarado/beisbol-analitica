@@ -19,7 +19,7 @@ INNER JOIN (
   WHERE
     groupingDescription = 'MAJORLEAGUEID_SEASONID_GAMETYPE2'
     AND gameType2 = 'RS'
-    AND aggregation_type = 'AGGREGATED'
+    AND aggregationType = 'AGGREGATED'
 ) w
   ON abs.majorLeagueId = w.majorLeagueId
   AND abs.seasonId = w.seasonId
@@ -28,13 +28,13 @@ INNER JOIN (
   WHERE groupingDescription IN ( 'MAJORLEAGUEID_SEASONID_GAMETYPE2',
                                  'MAJORLEAGUEID_SEASONID_GAMETYPE2_PLAYERID'
                               )
-  AND aggregation_type = 'AGGREGATED';
+  AND aggregationType = 'AGGREGATED';
 
 UPDATE
   agg_batting_stats
   SET weightedRunsAboveAverage = ( weightedOnBaseAverageRelativeToOuts - leagueWeightedOnBaseAverageRelativeToOuts ) / weightedOnBaseAverageScale * ( atBats + unintentionalWalks + sacFlies + hitByPitch )
   WHERE groupingDescription = 'MAJORLEAGUEID_SEASONID_GAMETYPE2_PLAYERID'
-  AND aggregation_type = 'AGGREGATED';
+  AND aggregationType = 'AGGREGATED';
 
 COMMIT;
 

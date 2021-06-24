@@ -94,12 +94,20 @@ CALL wrc();
 CALL ops_plus();
 
 -- Aggregated Pitching Stats
-CALL agg_pitching_stats( 'majorLeagueId,seasonId,gameType2', @insert_stmt );
-CALL agg_pitching_stats( 'majorLeagueId,seasonId,gameType2,playerId', @insert_stmt );
-CALL agg_pitching_stats( 'majorLeagueId,seasonId,gameType2,teamId', @insert_stmt );
-CALL agg_pitching_stats( 'majorLeagueId,seasonId,gameType2,teamId,playerId', @insert_stmt );
-CALL agg_pitching_stats( 'majorLeagueId,seasonId,gameType2,venueId,teamId,teamType', @insert_stmt );
-CALL agg_pitching_stats( 'majorLeagueId,seasonId,gameType2,teamId,teamType', @insert_stmt );
+CALL agg_pitching_stats( 'majorLeagueId,seasonId,gameType2', 'AGGREGATED', @insert_stmt );
+CALL agg_pitching_stats( 'majorLeagueId,seasonId,gameType2,playerId', 'AGGREGATED', @insert_stmt );
+CALL agg_pitching_stats( 'majorLeagueId,seasonId,gameType2,teamId', 'AGGREGATED', @insert_stmt );
+CALL agg_pitching_stats( 'majorLeagueId,seasonId,gameType2,teamId,playerId', 'AGGREGATED', @insert_stmt );
+CALL agg_pitching_stats( 'majorLeagueId,seasonId,gameType2,venueId,teamId,teamType', 'AGGREGATED', @insert_stmt );
+CALL agg_pitching_stats( 'majorLeagueId,seasonId,gameType2,teamId,teamType', 'AGGREGATED', @insert_stmt );
+
+-- Cumulative Pitching Stats
+CALL agg_pitching_stats( 'majorLeagueId,seasonId,gameType2', 'CUMULATIVE', @insert_stmt );
+CALL agg_pitching_stats( 'majorLeagueId,seasonId,gameType2,playerId', 'CUMULATIVE', @insert_stmt );
+CALL agg_pitching_stats( 'majorLeagueId,seasonId,gameType2,teamId', 'CUMULATIVE', @insert_stmt );
+CALL agg_pitching_stats( 'majorLeagueId,seasonId,gameType2,teamId,playerId', 'CUMULATIVE', @insert_stmt );
+CALL agg_pitching_stats( 'majorLeagueId,seasonId,gameType2,venueId,teamId,teamType', 'CUMULATIVE', @insert_stmt );
+CALL agg_pitching_stats( 'majorLeagueId,seasonId,gameType2,teamId,teamType', 'CUMULATIVE', @insert_stmt );
 
 -- Aggregated Pitching Split Stats
 CALL agg_pitching_split_stats( 'majorLeagueId,seasonId,gameType2,batSide', @insert_stmt );

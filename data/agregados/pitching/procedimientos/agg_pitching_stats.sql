@@ -4,13 +4,19 @@ DROP PROCEDURE agg_pitching_stats;
 
 DELIMITER //
 
-CREATE PROCEDURE agg_pitching_stats( IN p_grouping_fields VARCHAR(255), OUT insert_stmt VARCHAR(16000))
+CREATE PROCEDURE agg_pitching_stats( IN p_grouping_fields VARCHAR(255),
+                                    IN p_aggregation_type VARCHAR(255),
+                                    OUT insert_stmt VARCHAR(16000)
+                                  )
 BEGIN
 
 /* Para probar este procedimiento hacer: CALL agg_pitching_stats( 'majorLeagueId', @insert_stmt);  */
 
-SET @insert_stmt = CONCAT('INSERT INTO agg_pitching_stats (', p_grouping_fields,',',
-                          ' airOuts,
+SET @insert_stmt = CONCAT('INSERT INTO agg_pitching_stats (',
+                            IF( p_aggregation_type = 'CUMULATIVE', 'gameDate,',''),
+                            p_grouping_fields,',',
+                          ' aggregationType,
+                            airOuts,
                             atBats,
                             walks,
                             battersFaced,
@@ -155,8 +161,11 @@ SET @insert_stmt = CONCAT('INSERT INTO agg_pitching_stats (', p_grouping_fields,
                                 SUM(lineDriveBunts) AS lineDriveBunts
                             FROM game_player_split_stats
                             GROUP BY 1, 2
-                            )
-                            SELECT ', p_grouping_fields, ',',
+                            ), d AS
+                            (
+                            SELECT ',
+                                IF( p_aggregation_type = 'CUMULATIVE', 'gameDate,',''),
+                                p_grouping_fields, ',',
                             '   SUM(airOuts) airOuts,
                                 SUM(atBats) atBats,
                                 SUM(walks) walks,
@@ -253,6 +262,104 @@ SET @insert_stmt = CONCAT('INSERT INTO agg_pitching_stats (', p_grouping_fields,
                                 AND bs.playerId = ss.pitcherId
                             WHERE gameType2 IN ("PS","RS")
                             GROUP BY ',
+                                IF( p_aggregation_type = 'CUMULATIVE', 'gameDate,',''),
+                                p_grouping_fields,
+                            ')
+                            SELECT ',
+                                IF( p_aggregation_type = 'CUMULATIVE', 'gameDate,',''),
+                                p_grouping_fields, ',',
+                                IF( p_aggregation_type = 'CUMULATIVE', '"CUMULATIVE",','"AGGREGATED",'),
+                                AGG_OR_CUM_QUERIES('SUM(airOuts)', p_grouping_fields, p_aggregation_type ),' airOuts,',
+                                AGG_OR_CUM_QUERIES('SUM(atBats)', p_grouping_fields, p_aggregation_type ),' atBats,',
+                                AGG_OR_CUM_QUERIES('SUM(walks)', p_grouping_fields, p_aggregation_type ),' walks,',
+                                AGG_OR_CUM_QUERIES('SUM(battersFaced)', p_grouping_fields, p_aggregation_type ),' battersFaced,',
+                                AGG_OR_CUM_QUERIES('SUM(blownSaves)', p_grouping_fields, p_aggregation_type ),' blownSaves,',
+                                AGG_OR_CUM_QUERIES('SUM(catcherInterferences)', p_grouping_fields, p_aggregation_type ),' AS catcherInterferences,',
+                                AGG_OR_CUM_QUERIES('SUM(caughtStealing)', p_grouping_fields, p_aggregation_type ),' caughtStealing,',
+                                AGG_OR_CUM_QUERIES('SUM(completeGames)', p_grouping_fields, p_aggregation_type ),' completeGames,',
+                                AGG_OR_CUM_QUERIES('SUM(doubles)', p_grouping_fields, p_aggregation_type ),' doubles,',
+                                AGG_OR_CUM_QUERIES('SUM(earnedRuns)', p_grouping_fields, p_aggregation_type ),' earnedRuns,',
+                                AGG_OR_CUM_QUERIES('SUM(gamesFinished)', p_grouping_fields, p_aggregation_type ),' gamesFinished,',
+                                AGG_OR_CUM_QUERIES('SUM(gamesPitched)', p_grouping_fields, p_aggregation_type ),' gamesPitched,',
+                                AGG_OR_CUM_QUERIES('SUM(gamesPlayed)', p_grouping_fields, p_aggregation_type ),' gamesPlayed,',
+                                AGG_OR_CUM_QUERIES('SUM(gamesStarted)', p_grouping_fields, p_aggregation_type ),' gamesStarted,',
+                                AGG_OR_CUM_QUERIES('SUM(groundOuts)', p_grouping_fields, p_aggregation_type ),' groundOuts,',
+                                AGG_OR_CUM_QUERIES('SUM(hitBatsmen)', p_grouping_fields, p_aggregation_type ),' hitBatsmen,',
+                                AGG_OR_CUM_QUERIES('SUM(hits)', p_grouping_fields, p_aggregation_type ),' hits,',
+                                AGG_OR_CUM_QUERIES('SUM(holds)', p_grouping_fields, p_aggregation_type ),' holds,',
+                                AGG_OR_CUM_QUERIES('SUM(homeRuns)', p_grouping_fields, p_aggregation_type ),' homeRuns,',
+                                AGG_OR_CUM_QUERIES('SUM(inheritedRunners)', p_grouping_fields, p_aggregation_type ),' inheritedRunners,',
+                                AGG_OR_CUM_QUERIES('SUM(inheritedRunnersScored)', p_grouping_fields, p_aggregation_type ),' inheritedRunnersScored,',
+                                AGG_OR_CUM_QUERIES('SUM(intentionalWalks)', p_grouping_fields, p_aggregation_type ),' intentionalWalks,',
+                                AGG_OR_CUM_QUERIES('SUM(losses)', p_grouping_fields, p_aggregation_type ),' losses,',
+                                AGG_OR_CUM_QUERIES('SUM(numberOfPitches)', p_grouping_fields, p_aggregation_type ),' numberOfPitches,',
+                                AGG_OR_CUM_QUERIES('SUM(outs)', p_grouping_fields, p_aggregation_type ),' outs,',
+                                AGG_OR_CUM_QUERIES('SUM(pickoffs)', p_grouping_fields, p_aggregation_type ),' pickoffs,',
+                                AGG_OR_CUM_QUERIES('SUM(pitchesThrown)', p_grouping_fields, p_aggregation_type ),' pitchesThrown,',
+                                AGG_OR_CUM_QUERIES('SUM(plateAppearances)', p_grouping_fields, p_aggregation_type ),' plateAppearances,',
+                                AGG_OR_CUM_QUERIES('SUM(rbi)', p_grouping_fields, p_aggregation_type ),' rbi,',
+                                AGG_OR_CUM_QUERIES('SUM(runs)', p_grouping_fields, p_aggregation_type ),' runs,',
+                                AGG_OR_CUM_QUERIES('SUM(sacBunts)', p_grouping_fields, p_aggregation_type ),' sacBunts,',
+                                AGG_OR_CUM_QUERIES('SUM(sacFlies)', p_grouping_fields, p_aggregation_type ),' sacFlies,',
+                                AGG_OR_CUM_QUERIES('SUM(saveOpportunities)', p_grouping_fields, p_aggregation_type ),' saveOpportunities,',
+                                AGG_OR_CUM_QUERIES('SUM(saves)', p_grouping_fields, p_aggregation_type ),' saves,',
+                                AGG_OR_CUM_QUERIES('SUM(singles)', p_grouping_fields, p_aggregation_type ),' singles,',
+                                AGG_OR_CUM_QUERIES('SUM(shutouts)', p_grouping_fields, p_aggregation_type ),' shutouts,',
+                                AGG_OR_CUM_QUERIES('SUM(stolenBases)', p_grouping_fields, p_aggregation_type ),' stolenBases,',
+                                AGG_OR_CUM_QUERIES('SUM(strikeOuts)', p_grouping_fields, p_aggregation_type ),' strikeOuts,',
+                                AGG_OR_CUM_QUERIES('SUM(triples)', p_grouping_fields, p_aggregation_type ),' triples,',
+                                AGG_OR_CUM_QUERIES('SUM(unintentionalWalks)', p_grouping_fields, p_aggregation_type ),' unintentionalWalks,',
+                                AGG_OR_CUM_QUERIES('SUM(wildPitches)', p_grouping_fields, p_aggregation_type ),' wildPitches,',
+                                AGG_OR_CUM_QUERIES('SUM(wins)', p_grouping_fields, p_aggregation_type ),' wins,',
+                                -- These metrics come from the pitches table
+                                AGG_OR_CUM_QUERIES('SUM(balls)', p_grouping_fields, p_aggregation_type ),' AS balls,',
+                                AGG_OR_CUM_QUERIES('SUM(ballsPitchOut)', p_grouping_fields, p_aggregation_type ),' AS ballsPitchOut,',
+                                AGG_OR_CUM_QUERIES('SUM(ballsInDirt)', p_grouping_fields, p_aggregation_type ),' AS ballsInDirt,',
+                                AGG_OR_CUM_QUERIES('SUM(intentBalls)', p_grouping_fields, p_aggregation_type ),' AS intentBalls,',
+                                AGG_OR_CUM_QUERIES('SUM(fouls)', p_grouping_fields, p_aggregation_type ),' AS fouls,',
+                                AGG_OR_CUM_QUERIES('SUM(foulBunts)', p_grouping_fields, p_aggregation_type ),' AS foulBunts,',
+                                AGG_OR_CUM_QUERIES('SUM(foulTips)', p_grouping_fields, p_aggregation_type ),' AS foulTips,',
+                                AGG_OR_CUM_QUERIES('SUM(foulPitchOuts)', p_grouping_fields, p_aggregation_type ),' AS foulPitchOuts,',
+                                AGG_OR_CUM_QUERIES('SUM(hitIntoPlay)', p_grouping_fields, p_aggregation_type ),' AS hitIntoPlay,',
+                                AGG_OR_CUM_QUERIES('SUM(pitches)', p_grouping_fields, p_aggregation_type ),' AS pitches,',
+                                AGG_OR_CUM_QUERIES('SUM(pitchOuts)', p_grouping_fields, p_aggregation_type ),' AS pitchOuts,',
+                                AGG_OR_CUM_QUERIES('SUM(strikes)', p_grouping_fields, p_aggregation_type ),' AS strikes,',
+                                AGG_OR_CUM_QUERIES('SUM(strikesCalled)', p_grouping_fields, p_aggregation_type ),' AS strikesCalled,',
+                                AGG_OR_CUM_QUERIES('SUM(strikesPitchOuts)', p_grouping_fields, p_aggregation_type ),' AS strikesPitchOuts,',
+                                AGG_OR_CUM_QUERIES('SUM(missedBunts)', p_grouping_fields, p_aggregation_type ),' AS missedBunts,',
+                                AGG_OR_CUM_QUERIES('SUM(swingAndMissStrikes)', p_grouping_fields, p_aggregation_type ),' AS swingAndMissStrikes,',
+                                AGG_OR_CUM_QUERIES('SUM(swingsPitchOuts)', p_grouping_fields, p_aggregation_type ),' AS swingsPitchOuts,',
+                                AGG_OR_CUM_QUERIES('SUM(swings)', p_grouping_fields, p_aggregation_type ),' AS swings,',
+                                -- Swings Per Ball and Strikes
+                                -- 0 Ball(s)', p_grouping_fields, p_aggregation_type ),'
+                                AGG_OR_CUM_QUERIES('SUM(swingsZeroAndZero)', p_grouping_fields, p_aggregation_type ),' AS swingsZeroAndZero,',
+                                AGG_OR_CUM_QUERIES('SUM(swingsZeroAndOne)', p_grouping_fields, p_aggregation_type ),' AS swingsZeroAndOne,',
+                                AGG_OR_CUM_QUERIES('SUM(swingsZeroAndTwo)', p_grouping_fields, p_aggregation_type ),' AS swingsZeroAndTwo,',
+                                -- 1 Ball(s)', p_grouping_fields, p_aggregation_type ),'
+                                AGG_OR_CUM_QUERIES('SUM(swingsOneAndZero)', p_grouping_fields, p_aggregation_type ),' AS swingsOneAndZero,',
+                                AGG_OR_CUM_QUERIES('SUM(swingsOneAndOne)', p_grouping_fields, p_aggregation_type ),' AS swingsOneAndOne,',
+                                AGG_OR_CUM_QUERIES('SUM(swingsOneAndTwo)', p_grouping_fields, p_aggregation_type ),' AS swingsOneAndTwo,',
+                                -- 2 Ball(s)', p_grouping_fields, p_aggregation_type ),'
+                                AGG_OR_CUM_QUERIES('SUM(swingsTwoAndZero)', p_grouping_fields, p_aggregation_type ),' AS swingsTwoAndZero,',
+                                AGG_OR_CUM_QUERIES('SUM(swingsTwoAndOne)', p_grouping_fields, p_aggregation_type ),' AS swingsTwoAndOne,',
+                                AGG_OR_CUM_QUERIES('SUM(swingsTwoAndTwo)', p_grouping_fields, p_aggregation_type ),' AS swingsTwoAndTwo,',
+                                -- 3 Ball(s)', p_grouping_fields, p_aggregation_type ),'
+                                AGG_OR_CUM_QUERIES('SUM(swingsThreeAndZero)', p_grouping_fields, p_aggregation_type ),' AS swingsThreeAndZero,',
+                                AGG_OR_CUM_QUERIES('SUM(swingsThreeAndOne)', p_grouping_fields, p_aggregation_type ),' AS swingsThreeAndOne,',
+                                AGG_OR_CUM_QUERIES('SUM(swingsThreeAndTwo)', p_grouping_fields, p_aggregation_type ),' AS swingsThreeAndTwo,',
+                                -- Trajectories
+                                AGG_OR_CUM_QUERIES('SUM(flyBalls)', p_grouping_fields, p_aggregation_type ),' AS flyBalls,',
+                                AGG_OR_CUM_QUERIES('SUM(groundBalls)', p_grouping_fields, p_aggregation_type ),' AS groundBalls,',
+                                AGG_OR_CUM_QUERIES('SUM(lineDrives)', p_grouping_fields, p_aggregation_type ),' AS lineDrives,',
+                                AGG_OR_CUM_QUERIES('SUM(popUps)', p_grouping_fields, p_aggregation_type ),' AS popUps,',
+                                AGG_OR_CUM_QUERIES('SUM(groundBunts)', p_grouping_fields, p_aggregation_type ),' AS groundBunts,',
+                                AGG_OR_CUM_QUERIES('SUM(popupBunts)', p_grouping_fields, p_aggregation_type ),' AS popupBunts,',
+                                AGG_OR_CUM_QUERIES('SUM(lineDriveBunts)', p_grouping_fields, p_aggregation_type ),' AS lineDriveBunts,',
+                              ' agg_grouping_id("', p_grouping_fields, '") grouping_id,
+                                agg_grouping_description("', p_grouping_fields, '") grouping_description
+                            FROM d
+                            GROUP BY ',
+                                IF( p_aggregation_type = 'CUMULATIVE', 'gameDate,',''),
                                 p_grouping_fields
                         );
 

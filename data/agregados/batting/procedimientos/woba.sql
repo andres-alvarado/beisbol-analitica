@@ -37,7 +37,7 @@ INNER JOIN (
   WHERE groupingDescription IN( 'MAJORLEAGUEID_SEASONID_GAMETYPE2',
                                 'MAJORLEAGUEID_SEASONID_GAMETYPE2_PLAYERID'
                               )
-  AND   aggregation_type = 'AGGREGATED';
+  AND   aggregationType = 'AGGREGATED';
 
 /* Calcular wOBA */
 UPDATE
@@ -69,7 +69,7 @@ UPDATE
   WHERE groupingDescription IN( 'MAJORLEAGUEID_SEASONID_GAMETYPE2',
                                 'MAJORLEAGUEID_SEASONID_GAMETYPE2_PLAYERID'
                               )
-  AND   aggregation_type = 'AGGREGATED';
+  AND   aggregationType = 'AGGREGATED';
 
 COMMIT;
 

@@ -5,7 +5,7 @@ DROP TABLE agg_batting_stats;
 CREATE TABLE agg_batting_stats (
   groupingId INTEGER UNSIGNED,
   groupingDescription VARCHAR(255),
-  aggregation_type VARCHAR(20),
+  aggregationType VARCHAR(20),
   majorLeagueId INTEGER,
   seasonId DOUBLE,
   gameDate DATE,
