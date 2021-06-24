@@ -10,6 +10,12 @@ BEGIN
 UPDATE
   agg_fielding_stats
   SET
+    inningsPlayed = outsPlayed / 3,
+    gamesPlayed = outsPlayed / 27;
+
+UPDATE
+  agg_fielding_stats
+  SET
     fieldingPercentage = IF(  putOuts + assists + errors > 0, ( putouts + assists ) / ( putOuts + assists + errors ), NULL )
   , rangeFactorPerInning =  ( putOuts + assists ) / inningsPlayed
   , rangeFactorPerGame = ( putOuts + assists ) / gamesPlayed;
