@@ -15,7 +15,7 @@ BEGIN
 SET @insert_stmt = CONCAT('INSERT INTO agg_batting_stats(',
                             IF( p_aggregation_type = 'CUMULATIVE', 'gameDate,',''),
                             p_grouping_fields,',',
-                           'aggregation_type,
+                           'aggregationType,
                             atBats,
                             balks,
                             batterInterferences,

@@ -36,7 +36,8 @@ INNER JOIN (
   ,   abs.weightOut = w.weightOut
   WHERE groupingDescription IN( 'MAJORLEAGUEID_SEASONID_GAMETYPE2',
                                 'MAJORLEAGUEID_SEASONID_GAMETYPE2_PLAYERID'
-                              );
+                              )
+  AND   aggregationType = 'AGGREGATED';
 
 /* Calcular wOBA */
 UPDATE
@@ -67,7 +68,8 @@ UPDATE
                             )
   WHERE groupingDescription IN( 'MAJORLEAGUEID_SEASONID_GAMETYPE2',
                                 'MAJORLEAGUEID_SEASONID_GAMETYPE2_PLAYERID'
-                              );
+                              )
+  AND   aggregationType = 'AGGREGATED';
 
 COMMIT;
 
