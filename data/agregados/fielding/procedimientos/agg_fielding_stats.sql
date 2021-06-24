@@ -23,8 +23,6 @@ SET @insert_stmt = CONCAT('INSERT INTO agg_fielding_stats (',
 							              putOuts,
                             totalChances,
                             outsPlayed,
-                            inningsPlayed,
-                            gamesPlayed,
                             groupingId,
                             groupingDescription
                             )
@@ -70,8 +68,6 @@ SET @insert_stmt = CONCAT('INSERT INTO agg_fielding_stats (',
                             SUM( putOuts ) putOuts,
                             SUM( assists + catcherInterferences + errors + putOuts ) totalChances,
                             SUM( outs ) outsPlayed,
-                            SUM( outs ) / 3 inningsPlayed,
-                            SUM( outs ) / 27 gamesPlayed,
                             agg_grouping_id("', p_grouping_fields, '") groupingId,
                             agg_grouping_description("', p_grouping_fields, '") groupingDescription
                             FROM stats s
@@ -87,16 +83,14 @@ SET @insert_stmt = CONCAT('INSERT INTO agg_fielding_stats (',
                             IF( p_aggregation_type = 'CUMULATIVE', 'gameDate,',''),
                             p_grouping_fields, ',',
                             IF( p_aggregation_type = 'CUMULATIVE', '"CUMULATIVE",','"AGGREGATED",'),
-                          ' SUM( assists ) assists,
-                            SUM( catcherInterferences ) catcherInterferences,
-                            SUM( errors ) errors,
-                            SUM( games ) games,
-                            SUM( putOuts ) putOuts,
-                            SUM( assists + catcherInterferences + errors + putOuts ) totalChances,
-                            SUM( outsPlayed ) outsPlayed,
-                            SUM( outsPlayed ) / 3 inningsPlayed,
-                            SUM( outsPlayed ) / 27 gamesPlayed,
-                            agg_grouping_id("', p_grouping_fields, '") groupingId,
+                            AGG_OR_CUM_QUERIES('SUM( assists )', p_grouping_fields, p_aggregation_type ),' assists,',
+                            AGG_OR_CUM_QUERIES('SUM( catcherInterferences )', p_grouping_fields, p_aggregation_type ),' catcherInterferences,',
+                            AGG_OR_CUM_QUERIES('SUM( errors )', p_grouping_fields, p_aggregation_type ),' errors,',
+                            AGG_OR_CUM_QUERIES('SUM( games )', p_grouping_fields, p_aggregation_type ),' games,',
+                            AGG_OR_CUM_QUERIES('SUM( putOuts )', p_grouping_fields, p_aggregation_type ),' putOuts,',
+                            AGG_OR_CUM_QUERIES('SUM( totalChances )', p_grouping_fields, p_aggregation_type ),' totalChances,',
+                            AGG_OR_CUM_QUERIES('SUM( outsPlayed )', p_grouping_fields, p_aggregation_type ),' outsPlayed,',
+                          ' agg_grouping_id("', p_grouping_fields, '") groupingId,
                             agg_grouping_description("', p_grouping_fields, '") groupingDescription
                             FROM d
                             GROUP BY ',
@@ -106,16 +100,6 @@ SET @insert_stmt = CONCAT('INSERT INTO agg_fielding_stats (',
 SELECT @insert_stmt;
 PREPARE insert_stmt_sql FROM @insert_stmt;
 EXECUTE insert_stmt_sql;
-
-UPDATE
-  agg_fielding_stats
-  SET
-    fieldingPercentage = IF(  putOuts + assists + errors > 0, ( putouts + assists ) / ( putOuts + assists + errors ), NULL )
-  , rangeFactorPerInning =  ( putOuts + assists ) / inningsPlayed
-  , rangeFactorPerGame = ( putOuts + assists ) / gamesPlayed
-WHERE groupingId = agg_grouping_id(p_grouping_fields);
-
-COMMIT;
 
 END //
 
