@@ -67,7 +67,8 @@ SET @insert_stmt = CONCAT('INSERT INTO agg_team_performance_stats(',
                                 SUM(losses) AS losses,
                                 SUM(attendance) AS attendance
                                 FROM g
-                                 GROUP BY ',
+                                WHERE gameType2 = "RS"
+                                GROUP BY ',
                                 IF( p_aggregation_type = 'CUMULATIVE', 'gameDate,',''),
                                 p_grouping_fields,
                             ')
