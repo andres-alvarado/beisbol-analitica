@@ -22,7 +22,6 @@ CREATE TABLE agg_team_performance_stats (
   attendance INTEGER,
   -- Atributos
   majorLeague VARCHAR(10),
-  playerName VARCHAR(100),
   teamName VARCHAR(100),
   venueName VARCHAR(100)
 ) ENGINE = INNODB;

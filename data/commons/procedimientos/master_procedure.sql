@@ -51,12 +51,12 @@ CALL we_win_probability_added( 'majorLeagueId,seasonId,gameType2,battingTeamId,b
 CALL we_win_probability_added( 'majorLeagueId,seasonId,gameType2,pitchingTeamId,pitcherId', 'majorLeagueId,seasonId,gameType2,teamId,playerId', @insert_stmt );
 
 -- Aggregated Team Performance Stats
-CALL agg_team_performance_stats( 'majorLeagueId,seasonId,gameType2', 'AGGREGATED', @insert_stmt );
-CALL agg_team_performance_stats( 'majorLeagueId,seasonId,gameType2,teamType', 'AGGREGATED', @insert_stmt );
+CALL agg_team_performance_stats( 'majorLeagueId,seasonId,gameType2,teamId', 'AGGREGATED', @insert_stmt );
+CALL agg_team_performance_stats( 'majorLeagueId,seasonId,gameType2,teamId,teamType', 'AGGREGATED', @insert_stmt );
 
 -- Cumulative Team Performance Stats
-CALL agg_team_performance_stats( 'majorLeagueId,seasonId,gameType2', 'CUMULATIVE', @insert_stmt );
-CALL agg_team_performance_stats( 'majorLeagueId,seasonId,gameType2,teamType', 'CUMULATIVE', @insert_stmt );
+CALL agg_team_performance_stats( 'majorLeagueId,seasonId,gameType2,teamId', 'CUMULATIVE', @insert_stmt );
+CALL agg_team_performance_stats( 'majorLeagueId,seasonId,gameType2,teamId,teamType', 'CUMULATIVE', @insert_stmt );
 
 -- Derived Team Metrics
 CALL agg_team_performance_stats_derived_metrics();
@@ -167,6 +167,7 @@ CALL update_table_attributes('agg_batting_stats', @update_stmt);
 CALL update_table_attributes('agg_pitching_stats', @update_stmt);
 CALL update_table_attributes('agg_fielding_stats', @update_stmt);
 CALL update_table_attributes('pf_park_factors', @update_stmt);
+CALL update_table_attributes('agg_team_performance_stats', @update_stmt);
 
 -- Clean Staging Tables
 CALL clean_staging_tables();
