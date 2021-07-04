@@ -19,6 +19,7 @@ CREATE TABLE agg_team_performance_stats (
   wins INTEGER,
   losses INTEGER,
   winPercentage DOUBLE,
+  pythagoreanExpectation DOUBLE,
   attendance INTEGER,
   -- Atributos
   majorLeague VARCHAR(10),
